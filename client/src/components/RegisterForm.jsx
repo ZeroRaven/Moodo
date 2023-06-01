@@ -12,7 +12,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 import {
   getAuth,
@@ -20,10 +20,11 @@ import {
   createUserWithEmailAndPassword,
 } from "firebase/auth";
 import { auth } from "../firebaseConfig";
+import { useAuth } from "../contexts/AuthProvider";
 
 const RegisterForm = () => {
-  // const { register, isLoadingUser } = useAuth();
-  // Button.isLoading = isLoadingUser;
+  const { register, isLoadingUser } = useAuth();
+  Button.isLoading = isLoadingUser;
   const [error, setError] = useState(null);
 
   const handleRegisterSubmit = async (event) => {
@@ -32,12 +33,7 @@ const RegisterForm = () => {
     const body = Object.fromEntries(formData);
     try {
       if (body["password"] === body["password1"]) {
-        const userCredentials = await createUserWithEmailAndPassword(
-          auth,
-          body["email"],
-          body["password"]
-        );
-        console.log(userCredentials.user);
+        await register(body);
       } else {
         setError("Sorry passwords don't match");
       }
@@ -45,38 +41,75 @@ const RegisterForm = () => {
       // Show error message
       const errorCode = err.code;
       const errorMessage = err.message;
-      setError(errorCode, errorMessage);
+      if (errorCode === "auth/weak-password") {
+        setError("The password has to be atleast 6 characters");
+      } else if (errorCode === "auth/email-already-in-use") {
+        setError("This email already exists. Try logging in.");
+      } else {
+        setError(errorMessage);
+      }
     }
   };
 
   return (
-    <Container maxW="md" pt={7}>
+    <Container
+      maxW="md"
+      pt={7}
+      bg="themeColor.beige"
+      p={20}
+      my={10}
+      borderRadius={30}
+    >
       {error && <Text color="red">{error}</Text>}
-      <form onSubmit={handleRegisterSubmit}>
+      <form onSubmit={handleRegisterSubmit} aria-label="form">
+        <FormControl isRequired>
+          <FormLabel htmlFor="name">Name: </FormLabel>
+          <Input
+            variant="flushed"
+            type="text"
+            name="name"
+            placeholder="Abby Cole"
+            borderColor='black'
+          />
+        </FormControl>
         <FormControl isRequired>
           <FormLabel htmlFor="email">Email: </FormLabel>
           <Input
             variant="flushed"
             type="text"
             name="email"
-            placeholder="cookie_123"
+            placeholder="abby@gmail.com"
+            borderColor="black"
           />
         </FormControl>
         <FormControl isRequired>
           <FormLabel htmlFor="password1">Enter Password: </FormLabel>
-          <Input variant="flushed" type="password" name="password" />
+          <Input
+            variant="flushed"
+            type="password"
+            name="password"
+            borderColor="black"
+          />
         </FormControl>
         <FormControl isRequired>
           <FormLabel htmlFor="password2">Enter Password Again: </FormLabel>
-          <Input variant="flushed" type="password" name="password1" />
+          <Input
+            variant="flushed"
+            type="password"
+            name="password1"
+            borderColor="black"
+          />
           <FormHelperText>Your passwords must match.</FormHelperText>
         </FormControl>
-        <Button type="submit" mt={4}>
+        <Button type="submit" colorScheme="yellow" bgColor='themeColor.yellow' mt={4}>
           Register
         </Button>
       </form>
-      <Text>
-        Already have an account? <Link to="/login" color='teal.500'>Sign in</Link>
+      <Text mt={2}>
+        Already have an account?{" "}
+        <Link to="/login" >
+          Sign in
+        </Link>
       </Text>
     </Container>
   );

@@ -1,14 +1,11 @@
 import { initializeApp } from "firebase/app";
-import {
-  connectAuthEmulator,
-  getAuth,
-  onAuthStateChanged,
-} from "firebase/auth";
+import { getAuth } from "firebase/auth";
+import { getFirestore } from "firebase/firestore"
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
-// Your web app's Firebase configuration
+// My web app's Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyA9nX9m2rbnDC4hC18gEBok-YBEzzaW3lY",
   authDomain: "mentalhealthapp-28d99.firebaseapp.com",
@@ -22,13 +19,4 @@ const firebaseConfig = {
 // Initialize Firebase
 const firebaseApp = initializeApp(firebaseConfig);
 export const auth = getAuth(firebaseApp);
-// connectAuthEmulator(auth, " http://127.0.0.1:9099");
-// const db = getFirestore(firebaseApp)
-
-// onAuthStateChanged(auth, user => {
-//   if(user != null){
-//     console.log('logged in')
-//   }else{
-//     console.log('No user')
-//   }
-// })
+export const db = getFirestore(firebaseApp);
