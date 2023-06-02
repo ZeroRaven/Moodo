@@ -1,5 +1,5 @@
 import { auth, db } from "../firebaseConfig";
-import { setDoc, doc, collection, addDoc } from "firebase/firestore";
+import { setDoc, doc, collection, addDoc, query, limit, orderBy, getDocs, where } from "firebase/firestore";
 import { createContext, useContext, useEffect, useState } from "react";
 
 const FireStoreContext = createContext({});
@@ -26,9 +26,19 @@ export const FireStoreProvider = ({ children }) => {
       console.log(err);
     }
   };
+
+  const queryForMoodInfo = async(userId) => {
+    const moodQuery = query(
+      collection(db, 'moods'),
+      where('userId', '==', `${userId}`),
+      orderBy('date', "desc")
+      )
+      const querySnapshot = await getDocs(moodQuery)
+      return querySnapshot
+  }
   return (
     <FireStoreContext.Provider
-      value={{ addUserInfoToFirestore, addMoodInfoToFirestore }}
+      value={{ addUserInfoToFirestore, addMoodInfoToFirestore, queryForMoodInfo }}
     >
       {children}
     </FireStoreContext.Provider>

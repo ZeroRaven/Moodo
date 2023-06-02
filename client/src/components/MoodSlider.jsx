@@ -44,15 +44,15 @@ const MoodSlider = () => {
 
   const handleMoodBarChange = (e) => {
     if (e === 0) {
-      setFeel("depressed");
+      setFeel(["depressed", 0]);
     } else if (e === 25) {
-      setFeel("sad");
+      setFeel(["sad", 25]);
     } else if (e === 50) {
-      setFeel("alright");
+      setFeel(["alright", 50]);
     } else if (e === 75) {
-      setFeel("happy");
+      setFeel(["happy", 75]);
     } else if (e === 100) {
-      setFeel("amazing");
+      setFeel(["amazing", 100]);
     }
   };
 
@@ -147,7 +147,7 @@ const MoodSlider = () => {
       <Heading>Mood Tracker</Heading>
       <Text fontSize="2xl">How are you doing today?</Text>
       <Text aria-label="current mood" mt={5}>
-        I am {feel || "..."}
+        I am {feel[0] || "..."}
       </Text>
       <Slider
         aria-label="mood-slider"
