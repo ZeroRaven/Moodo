@@ -4,6 +4,7 @@ import {
   FormControl,
   FormHelperText,
   Heading,
+  Link,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -24,6 +25,8 @@ import {
 } from "@chakra-ui/react";
 import { VscSmiley } from "react-icons/vsc";
 import { useRef, useState } from "react";
+import { Link as ReactLink } from "react-router-dom";
+
 
 import { useFireStore } from "../contexts/FirestoreProvider";
 import { useAuth } from "../contexts/AuthProvider";
@@ -58,7 +61,6 @@ const MoodSlider = () => {
 
   const handleMoodBarSubmit = async (e) => {
     e.preventDefault();
-
     if (feel && input.length > 0) {
       const moodBody = {
         feel: feel,
@@ -116,16 +118,15 @@ const MoodSlider = () => {
                 ref={initialRef}
                 borderColor="gray.400"
                 focusBorderColor="themeColor.brown"
-                maxLength="200"
+                maxLength="400"
                 type="text"
                 minH="150px"
                 placeholder="Describe how you are feeling right now or what's going on in your life ..."
                 onChange={(e) => setInput(e.target.value)}
                 value={input}
               />
-
               <FormHelperText textAlign="end">
-                {200 - input.length} characters left.
+                {400 - input.length} characters left.
               </FormHelperText>
               {error && <Text color="red">{error}</Text>}
             </FormControl>
@@ -188,6 +189,9 @@ const MoodSlider = () => {
       >
         Confirm
       </Button>
+      <Link fontSize='xl' fontWeight='bold' color='red.400' p={2} borderRadius={10} as={ReactLink} to={'/moodgraph'}>
+        Have a look at your Mood Graph
+      </Link>
     </VStack>
   );
 };

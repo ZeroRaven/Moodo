@@ -7,11 +7,10 @@ import {
   signInWithPopup,
   updateProfile,
 } from "firebase/auth";
-import { setDoc, doc } from "firebase/firestore";
 import { createContext, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { auth, db } from "../firebaseConfig";
+import { auth } from "../firebaseConfig";
 import { useFireStore } from "./FirestoreProvider";
 //moodo.customerservice@gmail.com
 
@@ -35,8 +34,6 @@ export const AuthProvider = ({ children }) => {
       try {
         onAuthStateChanged(auth, (user) => {
           if (user) {
-            console.log(user);
-
             setUser(user);
             navigate("/");
             setIsLoadingUser(false);

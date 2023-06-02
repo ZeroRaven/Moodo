@@ -10,15 +10,15 @@ import {
   Button,
   Container,
   Text,
+  Link,
 } from "@chakra-ui/react";
 
-import { Link } from "react-router-dom";
-
+import { Link as ReactLink } from "react-router-dom";
 import { useAuth } from "../contexts/AuthProvider";
 
 const RegisterForm = () => {
   const { register, isLoadingUser } = useAuth();
-  Button.isLoading = isLoadingUser;
+  // Button.isLoading = isLoadingUser;
   const [error, setError] = useState(null);
 
   const handleRegisterSubmit = async (event) => {
@@ -101,7 +101,7 @@ const RegisterForm = () => {
       </form>
       <Text mt={2}>
         Already have an account?{" "}
-        <Link to="/login" >
+        <Link color='orange.500' as={ReactLink} to="/login" >
           Sign in
         </Link>
       </Text>

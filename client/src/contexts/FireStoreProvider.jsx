@@ -28,10 +28,16 @@ export const FireStoreProvider = ({ children }) => {
   };
 
   const queryForMoodInfo = async(userId) => {
+    const today = new Date()
+    const sevenDaysAgo = new Date()
+
+    sevenDaysAgo.setDate(today.getDate() -6)
     const moodQuery = query(
       collection(db, 'moods'),
       where('userId', '==', `${userId}`),
-      orderBy('date', "desc")
+      where('date', '>=', sevenDaysAgo ),
+      where('date', '<=', today),
+      orderBy('date')
       )
       const querySnapshot = await getDocs(moodQuery)
       return querySnapshot

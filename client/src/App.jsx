@@ -13,6 +13,7 @@ import RegisterForm from "./components/RegisterForm";
 import PrivateRoutes from "./components/PrivateRoutes";
 import Home from "./pages/Home";
 import Logout from "./components/Logout";
+import MoodGraph from "./components/MoodGraph";
 
 function App() {
   const {user} = useAuth()
@@ -51,8 +52,8 @@ function App() {
         <Route path="/register" element={<RegisterForm />} />
         <Route element={<PrivateRoutes redirectTo="/login" />}>
           <Route path="/" element={<Home />} />
-          {/* <Route path="/:username" element={<UserPage />} />
-          <Route path="/users" element={<UsersPage/>}/> */}
+          {/* <Route path="/:username" element={<UserPage />} /> */}
+          <Route path="/moodgraph" element={<MoodGraph/>}/>
           <Route path="/logout" element={<Logout />} />
         </Route>
         <Route path="/*" element={<NotFound />} />
