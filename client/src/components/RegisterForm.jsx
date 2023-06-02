@@ -12,14 +12,8 @@ import {
   Text,
 } from "@chakra-ui/react";
 
-import { Link, NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 
-import {
-  getAuth,
-  connectAuthEmulator,
-  createUserWithEmailAndPassword,
-} from "firebase/auth";
-import { auth } from "../firebaseConfig";
 import { useAuth } from "../contexts/AuthProvider";
 
 const RegisterForm = () => {

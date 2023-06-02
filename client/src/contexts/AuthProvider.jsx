@@ -7,15 +7,17 @@ import {
   signInWithPopup,
   updateProfile,
 } from "firebase/auth";
-import { collection, addDoc, setDoc, doc } from "firebase/firestore";
+import { setDoc, doc } from "firebase/firestore";
 import { createContext, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { auth, db } from "../firebaseConfig";
+import { useFireStore } from "./FirestoreProvider";
 //moodo.customerservice@gmail.com
 
 const provider = new GoogleAuthProvider();
 const AuthContext = createContext({});
+
 
 export const useAuth = () => {
   return useContext(AuthContext);
@@ -25,13 +27,15 @@ export const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
   const [isLoadingUser, setIsLoadingUser] = useState(true);
+  const { addUserInfoToFirestore } = useFireStore();
+
 
   useEffect(() => {
     const loginCheck = async () => {
       try {
         onAuthStateChanged(auth, (user) => {
           if (user) {
-            console.log(user)
+            console.log(user);
 
             setUser(user);
             navigate("/");
@@ -49,17 +53,6 @@ export const AuthProvider = ({ children }) => {
     loginCheck();
   }, []);
 
-  const addUserInfoToFirestore = async (userId, userInfo) => {
-
-    try {
-      const userDoc = doc(db, `users/${userId}`);
-      await setDoc(userDoc, userInfo);
-      console.log("the data has been written in db");
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
   const register = async (body) => {
     setIsLoadingUser(true);
     const userCred = await createUserWithEmailAndPassword(
@@ -72,8 +65,8 @@ export const AuthProvider = ({ children }) => {
       name: body["name"],
     });
     await updateProfile(auth.currentUser, {
-        displayName: body['name']
-    })
+      displayName: body["name"],
+    });
     setUser(userCred.user);
     navigate("/");
     setIsLoadingUser(false);
