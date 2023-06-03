@@ -7,17 +7,17 @@ import {
   ButtonGroup,
   Heading,
   Spinner,
+  Center,
 } from "@chakra-ui/react";
 import { Chart } from "react-google-charts";
-import { useFireStore } from "../contexts/FirestoreProvider";
 import { useAuth } from "../contexts/AuthProvider";
 import { useEffect, useState } from "react";
 import moodGraphStyles from "./MoodGraph.module.css";
 import MoodDisplays from "./MoodDisplays";
 import { Link as ReactLink } from "react-router-dom";
+import { queryForMoodInfo } from "../FireStoreQueries";
 
 const MoodGraph = () => {
-  const { queryForMoodInfo } = useFireStore();
   const { user } = useAuth();
   const [chartData, setChartData] = useState([]);
   const [moodData, setMoodData] = useState([]);
@@ -26,22 +26,38 @@ const MoodGraph = () => {
     const getQuery = async () => {
       const queryArr = [];
       const moodsArr = [];
-      const queryRes = await queryForMoodInfo(user.uid);
-      queryRes.forEach((snap) => {
-        const data = snap.data();
-        moodsArr.push(data);
-        queryArr.push([
-          new Date(data["date"].toDate()).toLocaleString().split(",")[0],
-          data["feel"][1],
-        ]);
-      });
-      setMoodData(moodsArr);
-      setChartData(queryArr);
-      setIsLoading(false)
+      try {
+        const queryRes = await queryForMoodInfo(user.uid);
+        queryRes.forEach((snap) => {
+          const data = snap.data();
+          moodsArr.push(data);
+          queryArr.push([
+            new Date(data["date"].toDate()).toLocaleString().split(",")[0],
+            data["feel"][1],
+          ]);
+        });
+        setMoodData(moodsArr);
+        setChartData(queryArr);
+        setIsLoading(false);
+      } catch (err) {
+        console.log(err);
+      }
     };
     setIsLoading(true);
     getQuery();
   }, []);
+
+  const getColor = (value) => {
+    if (value < 25) {
+      return "color: #FF7878";
+    } else if (value < 50) {
+      return "color: #FFC93C";
+    } else if (value < 75) {
+      return "color: #F3F0D7";
+    } else {
+      return "#CEE5D0";
+    }
+  };
 
   const groupedData = chartData.reduce((acc, [date, value]) => {
     if (acc[date]) {
@@ -56,8 +72,9 @@ const MoodGraph = () => {
 
   const avgData = Object.entries(groupedData).map(([date, { moods }]) => {
     const average = moods.reduce((acc, value) => acc + value, 0) / moods.length;
-    return [date, average];
+    return [date, average, getColor(average)];
   });
+
   const options = {
     title: "Mood Graph",
     backgroundColor: {
@@ -80,53 +97,61 @@ const MoodGraph = () => {
     legend: {
       position: "none",
     },
-    colors: ["#CEE5D0", "#E0C097", "#F3F0D7", "#FF7878", "#FFC93C"],
   };
-  const data = chartData && [["Date", "Mood"], ...avgData];
-  if (isLoading)return <Container centerContent><Heading size='sm' mt={5}><Spinner/>...LOADING</Heading></Container>
-  return (
-    <Container maxW={"980px"}>
-      {avgData[0] && (avgData.pop()[1] < 50) ? (
-        <VStack bgColor="themeColor.beige" p={4} mt={5} borderRadius={15}>
-          <Text>
-            You seem sad... Would you like me to provide you some helpful facts
-            to deal with depression?
-          </Text>
-          <ButtonGroup>
-            <Button
-              target="_blank"
-              bgColor={"themeColor.pastel"}
-              as={ReactLink}
-              to={
-                "https://www.lifeline.org.au/media/0jsl1fs2/rev1_ll-4pp-fact-sheet_depression.pdf"
-              }
-            >
-              Depression Fact Sheet
-            </Button>
-            <Button
-              bgColor={"themeColor.red"}
-              as={ReactLink}
-              to={"tel:+61 131114"}
-            >
-              Crisis Hotline
-            </Button>
-          </ButtonGroup>
-        </VStack>
-      ) : (
-        <></>
-      )}
-
-      <Chart
-        className={moodGraphStyles.chart}
-        chartType="ColumnChart"
-        data={data}
-        options={options}
-        width={"100%"}
-        height={"500px"}
-      />
-      {moodData && <MoodDisplays moodData={moodData} />}
-    </Container>
-  );
+  const data = chartData && [["Date", "Mood", { role: "style" }], ...avgData];
+  if (isLoading)
+    return (
+      <Container centerContent>
+        <Heading size="sm" mt={5}>
+          <Spinner />
+          ...LOADING
+        </Heading>
+      </Container>
+    );
+  if (chartData.length!==0)
+    return (
+      <Container maxW={"980px"}>
+        {avgData[0] && avgData.pop()[1] < 50 ? (
+          <VStack bgColor="themeColor.beige" p={4} mt={5} borderRadius={15}>
+            <Text>
+              You seem sad... Would you like me to provide you some helpful
+              facts to deal with depression?
+            </Text>
+            <ButtonGroup>
+              <Button
+                target="_blank"
+                bgColor={"themeColor.pastel"}
+                as={ReactLink}
+                to={
+                  "https://www.lifeline.org.au/media/0jsl1fs2/rev1_ll-4pp-fact-sheet_depression.pdf"
+                }
+              >
+                Depression Fact Sheet
+              </Button>
+              <Button
+                bgColor={"themeColor.red"}
+                as={ReactLink}
+                to={"tel:+61 131114"}
+              >
+                Crisis Hotline
+              </Button>
+            </ButtonGroup>
+          </VStack>
+        ) : (
+          <></>
+        )}
+        <Chart
+          className={moodGraphStyles.chart}
+          chartType="ColumnChart"
+          data={data}
+          options={options}
+          width={"100%"}
+          height={"500px"}
+        />
+        {moodData && <MoodDisplays moodData={moodData} />}
+      </Container>
+    );
+return(<Heading textAlign='center'>Sorry there is no information to show.</Heading>) 
 };
 
 export default MoodGraph;

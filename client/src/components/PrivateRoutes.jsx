@@ -1,6 +1,6 @@
 import { Navigate, Outlet } from "react-router-dom"
 import { useAuth } from "../contexts/AuthProvider"
-import { Container, Heading, Spinner, Text } from '@chakra-ui/react'
+import { Container, Heading, Spinner } from '@chakra-ui/react'
 
 
 const PrivateRoutes = (props) => {

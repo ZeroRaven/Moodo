@@ -11,7 +11,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { auth } from "../firebaseConfig";
-import { useFireStore } from "./FirestoreProvider";
+import { addUserInfoToFirestore } from "../FireStoreQueries";
 //moodo.customerservice@gmail.com
 
 const provider = new GoogleAuthProvider();
@@ -26,7 +26,6 @@ export const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
   const [isLoadingUser, setIsLoadingUser] = useState(true);
-  const { addUserInfoToFirestore } = useFireStore();
 
 
   useEffect(() => {

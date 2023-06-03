@@ -19,14 +19,15 @@ function App() {
   const {user} = useAuth()
   return (
     <ChakraProvider theme={theme}>
-      <Flex alignItems="center" gap="2" bgColor="themeColor.yellow" color="black">
+      <Flex as={'nav'} alignItems="center" gap="2" bgColor="themeColor.yellow" color="black">
         <Box p="4">
-          <NavLink to="/">
+          <NavLink to="/" aria-label="home">
             <Heading size="md">Moodo</Heading>
           </NavLink>
         </Box>
         <Spacer />
         {user ? (
+        
           <>
             <Box p="4">
               <NavLink to="/logout">Logout</NavLink>

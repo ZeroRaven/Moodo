@@ -27,9 +27,8 @@ import { VscSmiley } from "react-icons/vsc";
 import { useRef, useState } from "react";
 import { Link as ReactLink } from "react-router-dom";
 
-
-import { useFireStore } from "../contexts/FirestoreProvider";
 import { useAuth } from "../contexts/AuthProvider";
+import { addMoodInfoToFirestore } from "../FireStoreQueries";
 
 const MoodSlider = () => {
   const [feel, setFeel] = useState("");
@@ -37,7 +36,6 @@ const MoodSlider = () => {
   const [moodDetail, setMoodDetail] = useState(null);
   const [error, setError] = useState(null);
 
-  const { addMoodInfoToFirestore } = useFireStore();
   const { user } = useAuth();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
@@ -97,8 +95,8 @@ const MoodSlider = () => {
       m={20}
       bg="themeColor.pastel"
       p="5rem"
+      w={[400, 500, 700]}
       borderRadius={40}
-      w="40rem"
       zIndex={100}
     >
       <Modal
@@ -145,13 +143,18 @@ const MoodSlider = () => {
         </ModalContent>
       </Modal>
 
-      <Heading>Mood Tracker</Heading>
+      <Heading id="mood-tracker">Mood Tracker</Heading>
       <Text fontSize="2xl">How are you doing today?</Text>
       <Text aria-label="current mood" mt={5}>
         I am {feel[0] || "..."}
       </Text>
       <Slider
+        minW="80%"
         aria-label="mood-slider"
+        aria-labelledby="mood-tracker"
+        aria-valuemin="0"
+        aria-valuemax="100"
+        aria-valuenow={feel[1]}
         defaultValue={0}
         step={25}
         colorScheme="orange"
@@ -176,7 +179,7 @@ const MoodSlider = () => {
         <SliderTrack bg="yellow.100">
           <SliderFilledTrack />
         </SliderTrack>
-        <SliderThumb boxSize={6}>
+        <SliderThumb boxSize={6} aria-hidden>
           <Box color="orange.400" as={VscSmiley} />
         </SliderThumb>
       </Slider>
@@ -186,10 +189,21 @@ const MoodSlider = () => {
         onClick={feel ? onOpen : null}
         mt={10}
         bgColor="themeColor.yellow"
+        aria-labelledby="mood-tracker"
       >
         Confirm
       </Button>
-      <Link fontSize='xl' fontWeight='bold' color='red.400' p={2} borderRadius={10} as={ReactLink} to={'/moodgraph'}>
+      <Link
+        fontSize="xl"
+        fontWeight="bold"
+        color="themeColor.red"
+        p={2}
+        borderRadius={10}
+        as={ReactLink}
+        to={"/moodgraph"}
+        aria-label="click to checkout your mood graph"
+        ref={finalRef}
+      >
         Have a look at your Mood Graph
       </Link>
     </VStack>

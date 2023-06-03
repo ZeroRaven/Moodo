@@ -1,0 +1,14 @@
+.circle{
+    background-color: #CEE5D0;
+    height:12rem;
+    width:12rem;
+    position:absolute;
+    border-radius: 50%;
+    opacity: .2;
+    /* animation: "rotate 5s linear infinite", */
+
+}
+
+/* .text{
+    transition: all 200ms ease-in-out;
+} */
