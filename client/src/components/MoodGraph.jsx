@@ -40,7 +40,7 @@ const MoodGraph = () => {
         setChartData(queryArr);
         setIsLoading(false);
       } catch (err) {
-        console.log(err);
+        console.error(err);
       }
     };
     setIsLoading(true);

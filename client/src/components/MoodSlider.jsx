@@ -84,7 +84,7 @@ const MoodSlider = () => {
         setInput("");
         onClose();
       } catch (err) {
-        console.log(err);
+        console.error(err);
       }
     } else {
       setError("Oh no! You can't leave it blank.");

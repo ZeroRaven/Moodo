@@ -9,15 +9,13 @@ import {
   getDocs,
   where,
 } from "firebase/firestore";
-import { createContext, useContext, useEffect, useState } from "react";
 
 export const addUserInfoToFirestore = async (userId, userInfo) => {
   try {
     const userDoc = doc(db, `users/${userId}`);
     await setDoc(userDoc, userInfo);
-    console.log("the data has been written in db");
   } catch (err) {
-    console.log(err);
+    console.error(err);
   }
 };
 export const addMoodInfoToFirestore = async (moodInfo) => {
@@ -25,7 +23,7 @@ export const addMoodInfoToFirestore = async (moodInfo) => {
     const moodCollection = collection(db, `moods`);
     return await addDoc(moodCollection, moodInfo);
   } catch (err) {
-    console.log(err);
+    console.error(err);
   }
 };
 
@@ -45,6 +43,30 @@ export const queryForMoodInfo = async (userId) => {
     const querySnapshot = await getDocs(moodQuery);
     return querySnapshot;
   } catch (err) {
-    console.log(err);
+    console.error(err);
+  }
+};
+
+
+export const addTipsInfoToFirestore = async(tipsInfo) => {
+  try {
+    const tipsCollection = collection(db, `tips`);
+    return await addDoc(tipsCollection, tipsInfo);
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+export const queryForTipsInfo = async (mood) => {
+  const today = new Date();
+  const tipsQuery = query(
+    collection(db, "tips"),
+    where("mood", "==", `${mood}`),
+  );
+  try {
+    const querySnapshot = await getDocs(tipsQuery);
+    return querySnapshot;
+  } catch (err) {
+    console.error(err);
   }
 };
