@@ -1,5 +1,4 @@
 import {
-  Box,
   Button,
   Container,
   Text,
@@ -7,7 +6,6 @@ import {
   ButtonGroup,
   Heading,
   Spinner,
-  Center,
 } from "@chakra-ui/react";
 import { Chart } from "react-google-charts";
 import { useAuth } from "../contexts/AuthProvider";
