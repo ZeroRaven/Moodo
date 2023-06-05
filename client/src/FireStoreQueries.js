@@ -84,3 +84,28 @@ export const queryForAudioInfo = async() => {
     console.error(err);
   }
 }
+
+
+export const addJournalEntry = async(entryInfo) => {
+  try {
+    const entryCollection = collection(db, `journalEntries`);
+    return await addDoc(entryCollection, entryInfo);
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+export const queryJournalEntries = async(userId) => {
+  const entriesQuery = query(
+    collection(db, "journalEntries"),
+    where('userId', '==', `${userId}`),
+    orderBy("created_on", "desc")
+
+  );
+  try {
+    const querySnapshot = await getDocs(entriesQuery);
+    return querySnapshot;
+  } catch (err) {
+    console.error(err);
+  }
+}

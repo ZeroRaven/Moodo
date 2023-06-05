@@ -15,6 +15,7 @@ import Home from "./pages/Home";
 import Logout from "./components/Logout";
 import MoodGraph from "./components/MoodGraph";
 import Meditation from "./pages/Meditation";
+import Journal from "./pages/Journal";
 
 
 
@@ -32,8 +33,11 @@ function App() {
         {user ? (
         
           <>
+          <Box p="4">
+              <NavLink to="/journal">Journal</NavLink>
+            </Box>
            <Box p="4">
-              <NavLink to="/meditation">Meditation</NavLink>
+              <NavLink to="/meditation">Meditation Center</NavLink>
             </Box>
             <Box p="4">
               <NavLink to="/logout">Logout</NavLink>
@@ -62,6 +66,7 @@ function App() {
         <Route element={<PrivateRoutes redirectTo="/login" />}>
           <Route path="/" element={<Home />} />
           <Route path="/meditation" element={<Meditation />} />
+          <Route path="/journal" element={<Journal />} />
           <Route path="/moodgraph" element={<MoodGraph/>}/>
           <Route path="/logout" element={<Logout />} />
         </Route>
