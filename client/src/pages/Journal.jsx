@@ -2,6 +2,7 @@ import {
   Card,
   Container,
   Heading,
+  Spinner,
   StackDivider,
   VStack,
 } from "@chakra-ui/react";
@@ -25,9 +26,9 @@ const Journal = () => {
       try {
         const queryRes = await queryJournalEntries(user.uid);
         queryRes.forEach((snap) => {
-          const data = {id:snap.id, ...snap.data()};
+          const data = { id: snap.id, ...snap.data() };
           queryArr.push(data);
-        //   console.log((new Date().seconds))
+          //   console.log((new Date().seconds))
           const date = format(new Date(data.created_on.toDate()), "yyyy-MM-dd");
           if (!groupedEntries[date]) {
             groupedEntries[date] = [];
@@ -44,6 +45,15 @@ const Journal = () => {
     setIsLoading(true);
     getQuery();
   }, []);
+  if (isLoading)
+    return (
+      <Container centerContent>
+        <Heading size="lg" >
+        <Spinner mr='1rem' mt="10rem" size="xl" />...LOADING
+        </Heading>
+      </Container>
+    );
+
   return (
     <VStack
       m={20}
@@ -62,7 +72,8 @@ const Journal = () => {
       />
 
       {entryData && (
-        <AllEntries entryData={entryData} groupedData={groupedData} />
+        <AllEntries entryData={entryData} groupedData={groupedData} setEntryData={setEntryData}
+        setGroupedData={setGroupedData}/>
       )}
     </VStack>
   );

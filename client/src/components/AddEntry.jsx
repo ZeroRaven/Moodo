@@ -26,6 +26,7 @@ const AddEntry = ({ setEntryData, entryData, groupedData, setGroupedData }) => {
         userId: user.uid,
         text: input.trim(),
         created_on: new Date(),
+        updated_on: new Date()
       };
       const entryRes = await addJournalEntry(body);
       const data = {

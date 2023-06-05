@@ -100,13 +100,13 @@ const MoodGraph = () => {
   if (isLoading)
     return (
       <Container centerContent>
-        <Heading size="sm" mt={5}>
-          <Spinner />
+        <Heading size="lg">
+          <Spinner mr="1rem" mt="10rem" size="xl" />
           ...LOADING
         </Heading>
       </Container>
     );
-  if (chartData.length!==0)
+  if (chartData.length !== 0)
     return (
       <Container maxW={"980px"}>
         {avgData[0] && avgData.pop()[1] < 50 ? (
@@ -149,7 +149,9 @@ const MoodGraph = () => {
         {moodData && <MoodDisplays moodData={moodData} />}
       </Container>
     );
-return(<Heading textAlign='center'>Sorry there is no information to show.</Heading>) 
+  return (
+    <Heading textAlign="center">Sorry there is no information to show.</Heading>
+  );
 };
 
 export default MoodGraph;

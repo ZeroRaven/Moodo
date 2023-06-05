@@ -8,6 +8,7 @@ import {
   orderBy,
   getDocs,
   where,
+  deleteDoc,
 } from "firebase/firestore";
 
 export const addUserInfoToFirestore = async (userId, userInfo) => {
@@ -107,5 +108,13 @@ export const queryJournalEntries = async(userId) => {
     return querySnapshot;
   } catch (err) {
     console.error(err);
+  }
+}
+
+export const deleteJournalEntry = async(entryId) => {
+  try{
+    await deleteDoc(doc(db,'journalEntries', `${entryId}`))
+  }catch(err){
+    console.error(err)
   }
 }
