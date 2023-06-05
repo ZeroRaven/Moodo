@@ -2,7 +2,7 @@ import "./App.css";
 import "@fontsource/poiret-one/400.css";
 import "@fontsource/raleway/400.css";
 
-import { Routes, Route, Link, useParams, NavLink } from "react-router-dom";
+import { Routes, Route, NavLink } from "react-router-dom";
 import { Flex, Box, Heading, Spacer, ChakraProvider, Container } from "@chakra-ui/react";
 
 import theme from "./components/theme";
@@ -14,6 +14,9 @@ import PrivateRoutes from "./components/PrivateRoutes";
 import Home from "./pages/Home";
 import Logout from "./components/Logout";
 import MoodGraph from "./components/MoodGraph";
+import Meditation from "./pages/Meditation";
+
+
 
 function App() {
   const {user} = useAuth()
@@ -29,6 +32,9 @@ function App() {
         {user ? (
         
           <>
+           <Box p="4">
+              <NavLink to="/meditation">Meditation</NavLink>
+            </Box>
             <Box p="4">
               <NavLink to="/logout">Logout</NavLink>
             </Box>
@@ -51,13 +57,14 @@ function App() {
       <Routes>
         <Route path="/login" element={<LoginForm />} />
         <Route path="/register" element={<RegisterForm />} />
+        <Route path="/*" element={<NotFound />} />
+
         <Route element={<PrivateRoutes redirectTo="/login" />}>
           <Route path="/" element={<Home />} />
-          {/* <Route path="/:username" element={<UserPage />} /> */}
+          <Route path="/meditation" element={<Meditation />} />
           <Route path="/moodgraph" element={<MoodGraph/>}/>
           <Route path="/logout" element={<Logout />} />
         </Route>
-        <Route path="/*" element={<NotFound />} />
       </Routes>
     </ChakraProvider>
   );

@@ -70,3 +70,17 @@ export const queryForTipsInfo = async (mood) => {
     console.error(err);
   }
 };
+
+
+export const queryForAudioInfo = async() => {
+  const audioQuery = query(
+    collection(db, "meditationAudios"),
+    orderBy('title')
+  );
+  try {
+    const querySnapshot = await getDocs(audioQuery);
+    return querySnapshot;
+  } catch (err) {
+    console.error(err);
+  }
+}

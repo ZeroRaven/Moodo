@@ -29,7 +29,7 @@ import { useRef, useState } from "react";
 import { Link as ReactLink } from "react-router-dom";
 
 import { useAuth } from "../contexts/AuthProvider";
-import { addMoodInfoToFirestore } from "../FireStoreQueries";
+import { addMoodInfoToFirestore } from "../FirestoreQueries";
 
 const MoodSlider = () => {
   const [feel, setFeel] = useState("");

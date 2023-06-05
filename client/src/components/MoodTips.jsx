@@ -10,12 +10,12 @@ import {
   Select,
   Spinner,
   Text,
+  UnorderedList,
   VStack,
 } from "@chakra-ui/react";
 import { useState } from "react";
-import moodActions from "../assets/moodActions";
 import axios from "axios";
-import { addTipsInfoToFirestore, queryForTipsInfo } from "../FireStoreQueries";
+import { addTipsInfoToFirestore, queryForTipsInfo } from "../FirestoreQueries";
 
 const MoodTips = () => {
   const [response, setResponse] = useState("");
@@ -125,14 +125,14 @@ const MoodTips = () => {
               </form>
             </HStack>
           )}
-          <OrderedList my={5}>
+          <UnorderedList my={5} styleType='none'  spacing={4}>
             {response &&
               response.tips.map((each) => (
-                <ListItem lineHeight={2} key={each}>
+                <ListItem lineHeight={7} key={each}>
                   {each}
                 </ListItem>
               ))}
-          </OrderedList>
+          </UnorderedList>
         </CardBody>
       </Card>
     </VStack>

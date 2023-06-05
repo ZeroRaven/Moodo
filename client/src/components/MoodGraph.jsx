@@ -13,7 +13,7 @@ import { useEffect, useState } from "react";
 import moodGraphStyles from "./MoodGraph.module.css";
 import MoodDisplays from "./MoodDisplays";
 import { Link as ReactLink } from "react-router-dom";
-import { queryForMoodInfo } from "../FireStoreQueries";
+import { queryForMoodInfo } from "../FirestoreQueries";
 
 const MoodGraph = () => {
   const { user } = useAuth();

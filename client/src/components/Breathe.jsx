@@ -18,6 +18,7 @@ const Breathe = () => {
   const controlsCircle = useAnimation();
 
   const startAnimations = () => {
+    setShowInhale(true)
     setIsAnimating(true);
     controlsCircle.start((i) => ({
       scale: [1, (i + 0.5) / 2, (i + 0.5) / 2, 1],
@@ -56,7 +57,7 @@ const Breathe = () => {
   };
 
   return (
-    <VStack my="15rem" id="breath" justifyContent="center" alignItems="center">
+    <VStack my="15rem" id="breath" justifyContent="center" alignItems="center" minH="6rem">
       {[1, 2, 3, 4].map((item) => (
         <motion.div
           key={item}
@@ -65,10 +66,10 @@ const Breathe = () => {
           custom={item}
         ></motion.div>
       ))}
-      <motion.div animate={controlsText}>
+      <motion.div animate={controlsText} position='absolute'>
         {showInhale !== null ? (
-          <Text className={circleStyles.text} color="orange.800" fontSize="lg">
-            {showInhale ? "Breath In" : "Breath out"}
+          <Text className={circleStyles.text} color="orange.800" fontSize="lg" >
+            {showInhale ? "Inhale..." : "Exhale..."}
           </Text>
         ) : null}
       </motion.div>
