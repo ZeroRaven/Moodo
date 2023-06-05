@@ -100,7 +100,7 @@ const MoodTips = () => {
         </CardHeader>
         <CardBody>
           {isLoading ? (
-            <Flex align="center" justify="center">
+            <Flex align="center" justify="center" gap={3}>
             <Spinner
               thickness="4px"
               speed="0.65s"
@@ -108,6 +108,7 @@ const MoodTips = () => {
               color="orange.500"
               size="xl"
             />
+            <Text>Sit tight. We are grabbing data for you...</Text>
             </Flex>
           ) : (
             <HStack gap={4}>
