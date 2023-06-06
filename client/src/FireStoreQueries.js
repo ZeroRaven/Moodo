@@ -10,6 +10,8 @@ import {
   where,
   deleteDoc,
   updateDoc,
+  arrayUnion,
+  arrayRemove,
 } from "firebase/firestore";
 
 export const addUserInfoToFirestore = async (userId, userInfo) => {
@@ -124,6 +126,58 @@ export const updateJournalEntry = async (entryId, fieldsToUpdate) => {
       text: fieldsToUpdate.text,
       updated_on: fieldsToUpdate.updated_on,
     });
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+export const createPost = async (userId, postInfo) => {
+  try {
+    const postsCollection = collection(db, `posts`);
+    return await addDoc(postsCollection, postInfo);
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+export const queryAllPosts = async () => {
+  const postsQuery = query(
+    collection(db, "posts"),
+    orderBy("created_on", "desc")
+  );
+  try {
+    const querySnapshot = await getDocs(postsQuery);
+    return querySnapshot;
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+export const updatePostLike = async (postToLike, userId) => {
+  const postRef = doc(db, "posts", `${postToLike.id}`);
+  if (!postToLike.likes.includes(userId)) {
+    try {
+      await updateDoc(postRef, {
+        likes: arrayUnion(userId),
+      });
+    } catch (err) {
+      console.error(err);
+    }
+  } else {
+    try {
+      await updateDoc(postRef, {
+        likes: arrayRemove(userId),
+      });
+    } catch (err) {
+      console.error(err);
+    }
+  }
+};
+
+export const deletePost = async (postId) => {
+  const postRef = doc(db, "posts", `${postId}`);
+  try {
+    await deleteDoc(postRef);
   } catch (err) {
     console.error(err);
   }

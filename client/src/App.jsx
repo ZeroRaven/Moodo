@@ -3,7 +3,7 @@ import "@fontsource/poiret-one/400.css";
 import "@fontsource/raleway/400.css";
 
 import { Routes, Route, NavLink } from "react-router-dom";
-import { Flex, Box, Heading, Spacer, ChakraProvider, Container } from "@chakra-ui/react";
+import { Flex, Box, Heading, Spacer, ChakraProvider } from "@chakra-ui/react";
 
 import theme from "./components/theme";
 import { useAuth } from "./contexts/AuthProvider";
@@ -16,14 +16,19 @@ import Logout from "./components/Logout";
 import MoodGraph from "./components/MoodGraph";
 import Meditation from "./pages/Meditation";
 import Journal from "./pages/Journal";
-
-
+import Community from "./pages/Community";
 
 function App() {
-  const {user} = useAuth()
+  const { user } = useAuth();
   return (
     <ChakraProvider theme={theme}>
-      <Flex as={'nav'} alignItems="center" gap="2" bgColor="themeColor.yellow" color="black">
+      <Flex
+        as={"nav"}
+        alignItems="center"
+        gap="2"
+        bgColor="themeColor.yellow"
+        color="black"
+      >
         <Box p="4">
           <NavLink to="/" aria-label="home">
             <Heading size="md">Moodo</Heading>
@@ -31,12 +36,14 @@ function App() {
         </Box>
         <Spacer />
         {user ? (
-        
           <>
-          <Box p="4">
+            <Box p="4">
               <NavLink to="/journal">Journal</NavLink>
             </Box>
-           <Box p="4">
+            <Box p="4">
+              <NavLink to="/community">Community</NavLink>
+            </Box>
+            <Box p="4">
               <NavLink to="/meditation">Meditation Center</NavLink>
             </Box>
             <Box p="4">
@@ -55,9 +62,6 @@ function App() {
         )}
       </Flex>
 
-
-
-
       <Routes>
         <Route path="/login" element={<LoginForm />} />
         <Route path="/register" element={<RegisterForm />} />
@@ -67,7 +71,8 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/meditation" element={<Meditation />} />
           <Route path="/journal" element={<Journal />} />
-          <Route path="/moodgraph" element={<MoodGraph/>}/>
+          <Route path="/moodgraph" element={<MoodGraph />} />
+          <Route path="/community" element={<Community />} />
           <Route path="/logout" element={<Logout />} />
         </Route>
       </Routes>

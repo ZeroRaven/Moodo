@@ -99,6 +99,7 @@ const MoodSlider = () => {
       w={[400, 500, 700]}
       borderRadius={40}
       zIndex={100}
+      opacity={.9}
     >
       <Modal
         closeOnOverlayClick={false}

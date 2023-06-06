@@ -12,7 +12,7 @@ import { addJournalEntry } from "../FirestoreQueries";
 import { useAuth } from "../contexts/AuthProvider";
 import { format } from "date-fns";
 
-const AddEntry = ({ setEntryData, entryData, groupedData, setGroupedData }) => {
+const AddEntry = ({ groupedData, setGroupedData }) => {
   const toast = useToast();
   const [input, setInput] = useState("");
   const [error, setError] = useState(null);
@@ -33,7 +33,6 @@ const AddEntry = ({ setEntryData, entryData, groupedData, setGroupedData }) => {
         id: entryRes.id,
         ...body,
       }
-      setEntryData([data, ...entryData])
       const date = format((body.created_on), "yyyy-MM-dd");
 
       if(!groupedData[date]){
@@ -41,7 +40,6 @@ const AddEntry = ({ setEntryData, entryData, groupedData, setGroupedData }) => {
       }else{
         setGroupedData( {[date]: groupedData[date].unshift(data), ...groupedData});
       }
-      
 
       toast({
         title: "New entry! Woohoo!",

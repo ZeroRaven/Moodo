@@ -5,22 +5,22 @@ import { format } from "date-fns";
 
 const AllEntries = ({ groupedData, setGroupedData }) => {
   return (
-    <VStack w="80%" spacing={6} align="stretch">
+    <VStack w="100%" spacing={6} align="stretch">
       {groupedData &&
         Object.entries(groupedData).map(([date, entries]) => (
           <Card
             bg="themeColor.beige"
+            opacity='.85'
             variant="elevated"
-            borderRadius={20}
+            borderRadius='3rem'
             key={date}
           >
-            <CardBody>
+            <CardBody w='100%'>
               <HStack
-                display={{ md: "flex" }}
-                px={3}
+                display={{ lg: "flex" }}
+                px={{sm:3}}
                 py={8}
-                m={3}
-                height="100%"
+                m={{sm:3}}
                 borderRadius={7}
                 maxW="100%"
               >
@@ -31,7 +31,8 @@ const AllEntries = ({ groupedData, setGroupedData }) => {
                   spacing={4}
                   borderLeftColor="themeColor.brown"
                   borderLeftWidth="1px"
-                  pl="2rem"
+                  pl='2rem'
+                  w='100%'
                 >
                   {entries.map((each) => (
                     <Entry

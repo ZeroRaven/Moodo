@@ -1,14 +1,14 @@
 import {
+  AlertDialog,
+  AlertDialogBody,
+  AlertDialogContent,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogOverlay,
   Button,
   ButtonGroup,
   Heading,
   IconButton,
-  Modal,
-  ModalCloseButton,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalOverlay,
   Spinner,
   Text,
   Textarea,
@@ -25,8 +25,7 @@ import { FiEdit3 } from "react-icons/fi";
 const Entry = ({ each, setGroupedData, groupedData }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
-
-  const initialRef = useRef(null);
+  const cancelRef = useRef(null);
 
   const [isEditable, setIsEditable] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -149,7 +148,7 @@ const Entry = ({ each, setGroupedData, groupedData }) => {
   };
 
   return (
-    <VStack alignItems="start" key={each.created_on}>
+    <VStack alignItems="start" key={each.created_on} w="100%">
       <Heading size="md" mt={3}>
         {each.created_on.seconds
           ? format(new Date(each.created_on.toDate()), "hh ':' mm aaa")
@@ -168,12 +167,15 @@ const Entry = ({ each, setGroupedData, groupedData }) => {
             maxLength={400}
             borderColor="gray.400"
             focusBorderColor="themeColor.brown"
-            width="100%"
-            minH="2rem"
+            w={{ lg: "30rem" }}
+            minH="6rem"
+            resize="horizontal"
             autoFocus
           />
         ) : (
-          <Text mt=".4rem">{each.text}</Text>
+          <Text mt=".4rem" minW='15rem' maxWidth="85%">
+            {each.text}{" "}
+          </Text>
         )
       ) : (
         <Spinner emptyColor="gray.200" color="orange.500" size="md" />
@@ -201,32 +203,45 @@ const Entry = ({ each, setGroupedData, groupedData }) => {
           Delete
         </IconButton>
       </ButtonGroup>
-      <Modal isOpen={isOpen} onClose={onClose} initialFocusRef={initialRef}>
-        <ModalOverlay />
-        <ModalContent bgColor="themeColor.beige">
-          <ModalHeader>Are your sure you want to delete?</ModalHeader>
-          <ModalCloseButton />
-          <ModalFooter>
-            <Button
-              bgColor="themeColor.yellow"
-              colorScheme="yellow"
-              mr={3}
-              onClick={() => handleEntryDelete(entryDeleteId)}
-              ref={initialRef}
-            >
-              Yes
-            </Button>
-            <Button
-              bgColor="themeColor.red"
-              colorScheme="red"
-              mr={3}
-              onClick={onClose}
-            >
-              No
-            </Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
+
+      <AlertDialog
+        isOpen={isOpen}
+        leastDestructiveRef={cancelRef}
+        onClose={onClose}
+      >
+        <AlertDialogOverlay>
+          <AlertDialogContent bgColor="themeColor.beige">
+            <AlertDialogHeader fontSize="lg" fontWeight="bold">
+              Delete Entry
+            </AlertDialogHeader>
+
+            <AlertDialogBody>
+              Are you sure? You can't undo this action afterwards.
+            </AlertDialogBody>
+
+            <AlertDialogFooter>
+              <Button
+                ref={cancelRef}
+                onClick={onClose}
+                colorScheme="yellow"
+                // ml={3}
+                bgColor="themeColor.yellow"
+              >
+                Cancel
+              </Button>
+              <Button
+                colorScheme="red"
+                ml={3}
+                bgColor="themeColor.red"
+                // mr={3}
+                onClick={() => handleEntryDelete(entryDeleteId)}
+              >
+                Delete
+              </Button>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialogOverlay>
+      </AlertDialog>
     </VStack>
   );
 };
