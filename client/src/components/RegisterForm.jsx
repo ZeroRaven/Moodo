@@ -70,7 +70,7 @@ const RegisterForm = () => {
           <FormLabel htmlFor="email">Email: </FormLabel>
           <Input
             variant="flushed"
-            type="text"
+            type="email"
             name="email"
             placeholder="abby@gmail.com"
             borderColor="black"

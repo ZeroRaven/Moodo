@@ -48,8 +48,15 @@ const Journal = () => {
   if (isLoading)
     return (
       <Container centerContent>
-        <Heading size="lg" >
-        <Spinner mr='1rem' mt="10rem" size="xl" />...LOADING
+        <Heading size="lg">
+          <Spinner
+            mr="1rem"
+            mt="10rem"
+            size="xl"
+            emptyColor="gray.200"
+            color="orange.500"
+          />
+          ...LOADING
         </Heading>
       </Container>
     );
@@ -72,8 +79,12 @@ const Journal = () => {
       />
 
       {entryData && (
-        <AllEntries entryData={entryData} groupedData={groupedData} setEntryData={setEntryData}
-        setGroupedData={setGroupedData}/>
+        <AllEntries
+          entryData={entryData}
+          groupedData={groupedData}
+          setEntryData={setEntryData}
+          setGroupedData={setGroupedData}
+        />
       )}
     </VStack>
   );

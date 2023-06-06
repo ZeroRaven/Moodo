@@ -101,7 +101,13 @@ const MoodGraph = () => {
     return (
       <Container centerContent>
         <Heading size="lg">
-          <Spinner mr="1rem" mt="10rem" size="xl" />
+          <Spinner
+            mr="1rem"
+            mt="10rem"
+            size="xl"
+            emptyColor="gray.200"
+            color="orange.500"
+          />
           ...LOADING
         </Heading>
       </Container>

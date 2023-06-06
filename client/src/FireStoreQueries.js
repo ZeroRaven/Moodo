@@ -9,6 +9,7 @@ import {
   getDocs,
   where,
   deleteDoc,
+  updateDoc,
 } from "firebase/firestore";
 
 export const addUserInfoToFirestore = async (userId, userInfo) => {
@@ -48,21 +49,20 @@ export const queryForMoodInfo = async (userId) => {
   }
 };
 
-
-export const addTipsInfoToFirestore = async(tipsInfo) => {
+export const addTipsInfoToFirestore = async (tipsInfo) => {
   try {
     const tipsCollection = collection(db, `tips`);
     return await addDoc(tipsCollection, tipsInfo);
   } catch (err) {
     console.error(err);
   }
-}
+};
 
 export const queryForTipsInfo = async (mood) => {
   const today = new Date();
   const tipsQuery = query(
     collection(db, "tips"),
-    where("mood", "==", `${mood}`),
+    where("mood", "==", `${mood}`)
   );
   try {
     const querySnapshot = await getDocs(tipsQuery);
@@ -72,11 +72,10 @@ export const queryForTipsInfo = async (mood) => {
   }
 };
 
-
-export const queryForAudioInfo = async() => {
+export const queryForAudioInfo = async () => {
   const audioQuery = query(
     collection(db, "meditationAudios"),
-    orderBy('title')
+    orderBy("title")
   );
   try {
     const querySnapshot = await getDocs(audioQuery);
@@ -84,24 +83,22 @@ export const queryForAudioInfo = async() => {
   } catch (err) {
     console.error(err);
   }
-}
+};
 
-
-export const addJournalEntry = async(entryInfo) => {
+export const addJournalEntry = async (entryInfo) => {
   try {
     const entryCollection = collection(db, `journalEntries`);
     return await addDoc(entryCollection, entryInfo);
   } catch (err) {
     console.error(err);
   }
-}
+};
 
-export const queryJournalEntries = async(userId) => {
+export const queryJournalEntries = async (userId) => {
   const entriesQuery = query(
     collection(db, "journalEntries"),
-    where('userId', '==', `${userId}`),
+    where("userId", "==", `${userId}`),
     orderBy("created_on", "desc")
-
   );
   try {
     const querySnapshot = await getDocs(entriesQuery);
@@ -109,12 +106,25 @@ export const queryJournalEntries = async(userId) => {
   } catch (err) {
     console.error(err);
   }
-}
+};
 
-export const deleteJournalEntry = async(entryId) => {
-  try{
-    await deleteDoc(doc(db,'journalEntries', `${entryId}`))
-  }catch(err){
-    console.error(err)
+export const deleteJournalEntry = async (entryId) => {
+  const entryRef = doc(db, "journalEntries", `${entryId}`);
+  try {
+    await deleteDoc(entryRef);
+  } catch (err) {
+    console.error(err);
   }
-}
+};
+
+export const updateJournalEntry = async (entryId, fieldsToUpdate) => {
+  const entryRef = doc(db, "journalEntries", `${entryId}`);
+  try {
+    await updateDoc(entryRef, {
+      text: fieldsToUpdate.text,
+      updated_on: fieldsToUpdate.updated_on,
+    });
+  } catch (err) {
+    console.error(err);
+  }
+};
