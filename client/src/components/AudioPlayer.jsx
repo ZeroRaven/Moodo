@@ -78,17 +78,17 @@ const AudioPlayer = ({
     setCurrentTime(0);
   };
   return (
-    <VStack my={7}>
+    <VStack my={7} >
       <Image
         objectFit="cover"
-        maxW={{ base: "100%", sm: "100%", md: "70%" }}
+        maxW={{ base: "90%", sm: "90%", md: "70%" }}
         aspectRatio={1.5 / 1}
         src={currentAudio.imageUrl}
         alt={currentAudio.title}
       />
       <Heading size="sm">{currentAudio.title}</Heading>
       <Text>{currentAudio.artist} </Text>
-      <HStack>
+      <HStack width='80%'>
         {!isPlaying ? (
           <Icon role="button" as={FaPlay} onClick={() => setIsPlaying(true)}>
             Play

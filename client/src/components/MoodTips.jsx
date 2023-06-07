@@ -64,17 +64,22 @@ const MoodTips = () => {
             },
           }
         );
-        const responseText = response.data.choices[0].text.trim();
-        const responseTextArr = responseText.split("\n\n");
-        setResponse({
-          tips: responseTextArr,
-        });
+        if (response.status !== 200) {
+          const randomIndex = Math.floor(Math.random() * queryArr.length);
+          setResponse(queryArr[randomIndex]);
+        } else {
+          const responseText = response.data.choices[0].text.trim();
+          const responseTextArr = responseText.split("\n\n");
+          setResponse({
+            tips: responseTextArr,
+          });
 
-        await addTipsInfoToFirestore({
-          mood: input,
-          tips: responseTextArr,
-          date_created: new Date(),
-        });
+          await addTipsInfoToFirestore({
+            mood: input,
+            tips: responseTextArr,
+            date_created: new Date(),
+          });
+        }
       } else {
         const randomIndex = Math.floor(Math.random() * queryArr.length);
         setResponse(queryArr[randomIndex]);
@@ -101,17 +106,17 @@ const MoodTips = () => {
         <CardBody>
           {isLoading ? (
             <Flex align="center" justify="center" gap={3}>
-            <Spinner
-              thickness="4px"
-              speed="0.65s"
-              emptyColor="gray.200"
-              color="orange.500"
-              size="xl"
-            />
-            <Text>Sit tight. We are grabbing data for you...</Text>
+              <Spinner
+                thickness="4px"
+                speed="0.65s"
+                emptyColor="gray.200"
+                color="orange.500"
+                size={{base:"md", md:"xl"}}
+              />
+              <Text>Sit tight. We are grabbing data for you...</Text>
             </Flex>
           ) : (
-            <HStack gap={4}>
+            <HStack gap={4} display={{md:'flex'}}>
               <Text fontSize="xl">What to do when I am feeling...</Text>
               <form onChange={handleSelectChange} aria-label="mood options">
                 <Select role="select" placeholder="Select mood" w="150px">
@@ -126,7 +131,7 @@ const MoodTips = () => {
               </form>
             </HStack>
           )}
-          <UnorderedList my={5} styleType='none'  spacing={4}>
+          <UnorderedList my={5} styleType="none" spacing={4}>
             {response &&
               response.tips.map((each) => (
                 <ListItem lineHeight={7} key={each}>

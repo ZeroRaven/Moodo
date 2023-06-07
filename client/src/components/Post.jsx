@@ -58,6 +58,7 @@ const Post = ({ post, setPosts, posts }) => {
     getQuery();
   }, []);
 
+  //Updates Like/Unlike on a post
   const handleLike = async (postToLike) => {
     try {
       await updatePostLike(postToLike, user.uid);
@@ -86,6 +87,7 @@ const Post = ({ post, setPosts, posts }) => {
     }
   };
 
+//Deletes a post
   const handlePostDelete = async (postId) => {
     try {
       await deletePost(postId);
@@ -181,9 +183,10 @@ const Post = ({ post, setPosts, posts }) => {
               fontSize="1.6rem"
               color="themeColor.yellow"
               _hover={{ bg: "transparent", color: "yellow.500" }}
+              onClick={onOpen}
             />
             <Badge fontSize="1rem" bg="transparent">
-              {comments.filter(comment=> comment.postId === post.id).length}
+              {comments.filter((comment) => comment.postId === post.id).length}
             </Badge>
           </Box>
         </ButtonGroup>

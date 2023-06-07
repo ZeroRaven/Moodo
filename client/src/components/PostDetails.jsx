@@ -2,8 +2,6 @@ import {
   Badge,
   Button,
   ButtonGroup,
-  FormControl,
-  FormHelperText,
   Heading,
   Modal,
   ModalBody,
@@ -13,9 +11,6 @@ import {
   ModalHeader,
   ModalOverlay,
   Text,
-  Textarea,
-  VStack,
-  useToast,
 } from "@chakra-ui/react";
 import { formatDistance } from "date-fns";
 import { useState } from "react";
@@ -62,7 +57,7 @@ const PostDetails = ({
           />
           {comments &&
             comments.map((comment) => (
-              <Comment comment={comment} key={comment.id} />
+              <Comment comment={comment} key={comment.id} setComments={setComments} comments={comments}/>
             ))}
         </ModalBody>
 

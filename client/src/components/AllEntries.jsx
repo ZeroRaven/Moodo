@@ -10,17 +10,17 @@ const AllEntries = ({ groupedData, setGroupedData }) => {
         Object.entries(groupedData).map(([date, entries]) => (
           <Card
             bg="themeColor.beige"
-            opacity='.85'
+            opacity=".85"
             variant="elevated"
-            borderRadius='3rem'
+            borderRadius="3rem"
             key={date}
           >
-            <CardBody w='100%'>
+            <CardBody w="100%">
               <HStack
                 display={{ lg: "flex" }}
-                px={{sm:3}}
+                px={{ sm: 3 }}
                 py={8}
-                m={{sm:3}}
+                m={{ sm: 3 }}
                 borderRadius={7}
                 maxW="100%"
               >
@@ -31,8 +31,8 @@ const AllEntries = ({ groupedData, setGroupedData }) => {
                   spacing={4}
                   borderLeftColor="themeColor.brown"
                   borderLeftWidth="1px"
-                  pl='2rem'
-                  w='100%'
+                  pl="2rem"
+                  w="100%"
                 >
                   {entries.map((each) => (
                     <Entry

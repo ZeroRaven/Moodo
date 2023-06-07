@@ -206,3 +206,12 @@ export const queryAllComments = async (postId) => {
     console.error(err);
   }
 };
+
+export const deleteComment = async (commentId) => {
+  const commentRef = doc(db, "comments", `${commentId}`);
+  try {
+    await deleteDoc(commentRef);
+  } catch (err) {
+    console.error(err);
+  }
+};

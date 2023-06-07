@@ -63,13 +63,15 @@ const QuotesDisplay = () => {
           exit={{ opacity: 0 }}
           transition={{ duration: 1 }}
         >
-          <HStack>
-            <Text>{quoteData.quote}</Text>
-            {quoteData.author && (
-              <Badge ml={3} bgColor="transparent">
-                -{quoteData.author}
-              </Badge>
-            )}
+          <HStack display={{ md: "flex" }}>
+            <Text mb={0} mx={3}>
+              {quoteData.quote}
+              {quoteData.author && (
+                <Badge ml={2} mt={0} bgColor="transparent">
+                  -{quoteData.author}
+                </Badge>
+              )}
+            </Text>
           </HStack>
         </motion.div>
       )}

@@ -1,0 +1,17 @@
+
+
+.navBar{
+    background-color: #FFC93C;
+    min-height: 3.3rem;
+}
+
+.navItem{
+    min-height: 2.8rem;
+}
+.navItem:hover{
+border-bottom: 2px solid #FF7878;
+}
+
+.navBtn:focus{
+    box-shadow: none !important;
+}

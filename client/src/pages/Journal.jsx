@@ -29,7 +29,7 @@ const Journal = () => {
         queryRes.forEach((snap) => {
           const data = { id: snap.id, ...snap.data() };
           queryArr.push(data);
-          const date = format(new Date(data.created_on.toDate()), "yyyy-MM-dd");
+          const date = format(data.created_on, "yyyy-MM-dd");
           if (!groupedEntries[date]) {
             groupedEntries[date] = [];
           }
@@ -64,11 +64,12 @@ const Journal = () => {
   return (
     <VStack
       bg="themeColor.pastel"
-      p={{sm:"5rem"}}
+      // p={{sm:"5rem"}}
       w="100%"
       mx="auto"
       className={journalStyles.waveContainer}
       position='relative'
+      p={{base:"1.5rem", sm:"2rem",md:"5rem"}}
     >
       <Heading>My Journal</Heading>
       <AddEntry
