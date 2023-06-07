@@ -2,7 +2,6 @@ import {
   Avatar,
   Badge,
   Box,
-  Button,
   ButtonGroup,
   Card,
   CardBody,
@@ -10,13 +9,6 @@ import {
   HStack,
   Heading,
   IconButton,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalOverlay,
   Text,
   Tooltip,
   useDisclosure,
@@ -27,9 +19,13 @@ import { FaComment } from "react-icons/fa";
 
 import { format, formatDistance } from "date-fns";
 import { useAuth } from "../contexts/AuthProvider";
-import { deletePost, updatePostLike } from "../FirestoreQueries";
+import {
+  deletePost,
+  queryAllComments,
+  updatePostLike,
+} from "../FirestoreQueries";
 import PostDetails from "./PostDetails";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const Post = ({ post, setPosts, posts }) => {
   const finalRef = useRef(null);
@@ -37,6 +33,30 @@ const Post = ({ post, setPosts, posts }) => {
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { user } = useAuth();
+  const [comments, setComments] = useState([]);
+  const [input, setInput] = useState("");
+  const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    const getQuery = async () => {
+      const queryArr = [];
+
+      try {
+        const queryRes = await queryAllComments(post.id);
+        queryRes.forEach((snap) => {
+          const data = { id: snap.id, ...snap.data() };
+          queryArr.push(data);
+        });
+        setComments(queryArr);
+        setIsLoading(false);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    setIsLoading(true);
+    getQuery();
+  }, []);
 
   const handleLike = async (postToLike) => {
     try {
@@ -85,15 +105,15 @@ const Post = ({ post, setPosts, posts }) => {
 
   return (
     <Card
-      as="button"
       bg="themeColor.pastel"
       opacity=".85"
       variant="elevated"
       borderRadius="3rem"
       key={post.id}
-      width={{base:"100%", lg:"30%"}}
+      width={{ base: "100%", lg: "30%" }}
       minW="20rem"
       textAlign="start"
+      _hover={{ cursor: "pointer", backgroundColor: "themeColor.darkPastel" }}
     >
       <PostDetails
         finalRef={finalRef}
@@ -103,6 +123,8 @@ const Post = ({ post, setPosts, posts }) => {
         handlePostDelete={handlePostDelete}
         post={post}
         user={user}
+        comments={comments}
+        setComments={setComments}
       />
       <CardBody w="100%" px="3rem" pt="3rem" pb="0" onClick={onOpen}>
         <HStack display={{ xl: "flex" }} maxW="100%">
@@ -152,14 +174,18 @@ const Post = ({ post, setPosts, posts }) => {
               {post.likes.length}
             </Badge>
           </Box>
-
-          <IconButton
-            icon={<FaComment />}
-            bg="transparent"
-            fontSize="1.6rem"
-            color="themeColor.yellow"
-            _hover={{ bg: "transparent", color: "yellow.500" }}
-          />
+          <Box>
+            <IconButton
+              icon={<FaComment />}
+              bg="transparent"
+              fontSize="1.6rem"
+              color="themeColor.yellow"
+              _hover={{ bg: "transparent", color: "yellow.500" }}
+            />
+            <Badge fontSize="1rem" bg="transparent">
+              {comments.filter(comment=> comment.postId === post.id).length}
+            </Badge>
+          </Box>
         </ButtonGroup>
       </CardFooter>
     </Card>

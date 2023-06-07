@@ -6,9 +6,7 @@ import { motion } from "framer-motion";
 
 const QuotesDisplay = () => {
   const { user } = useAuth();
-  const [quoteData, setQuoteData] = useState({
-    quote: `...Loading`,
-  });
+  const [quoteData, setQuoteData] = useState({});
   const api_url = `https://api.api-ninjas.com/v1/quotes?category=inspirational`;
   const apiKey = import.meta.env.VITE_REACT_APP_APININJAS_API_KEY;
   useEffect(() => {
@@ -19,7 +17,7 @@ const QuotesDisplay = () => {
             "X-Api-Key": apiKey,
           },
         });
-        if (response.status === 200) {
+        if (response.status === 200 && response.data[0].quote.length < 250) {
           setQuoteData({
             quote: response.data[0].quote,
             author: response.data[0].author,
@@ -39,6 +37,8 @@ const QuotesDisplay = () => {
         quote: `Hi ${user.displayName}! Welcome to Moodo. Hope you are having a lovely day.`,
         author: "Moodo",
       }));
+    } else {
+      setQuoteData({});
     }
 
     return () => {
@@ -51,7 +51,9 @@ const QuotesDisplay = () => {
       bgColor="themeColor.pastel"
       justifyContent="center"
       p={2}
-      overflow="hidden" aria-label="inspirational quote"
+      overflow="hidden"
+      aria-label="inspirational quote"
+      minH="2.5rem"
     >
       {quoteData && (
         <motion.div

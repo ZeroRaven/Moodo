@@ -2,6 +2,8 @@ import {
   Badge,
   Button,
   ButtonGroup,
+  FormControl,
+  FormHelperText,
   Heading,
   Modal,
   ModalBody,
@@ -11,36 +13,57 @@ import {
   ModalHeader,
   ModalOverlay,
   Text,
-  useDisclosure,
+  Textarea,
+  VStack,
+  useToast,
 } from "@chakra-ui/react";
 import { formatDistance } from "date-fns";
-import { useRef } from "react";
+import { useState } from "react";
+import Comment from "./Comment";
+import AddComment from "./AddComment";
 
-const PostDetails = (
-  {finalRef,
+const PostDetails = ({
+  finalRef,
   isOpen,
   onClose,
   handleLike,
   handlePostDelete,
   post,
-  user}
-) => {
-
+  user,
+  comments,
+  setComments,
+}) => {
   return (
-    <Modal finalFocusRef={finalRef} isOpen={isOpen} onClose={onClose}>
+    <Modal
+      finalFocusRef={finalRef}
+      isOpen={isOpen}
+      onClose={onClose}
+      size="3xl"
+    >
       <ModalOverlay />
       <ModalContent p={5} borderRadius="1.6rem">
         <ModalHeader>
           <Heading>{post.username}</Heading>
-          <Badge
-           colorScheme="yellow" variant="outline">
+          <Badge colorScheme="yellow" variant="outline">
             {formatDistance(Date.now(), post.created_on)} ago
           </Badge>
         </ModalHeader>
 
         <ModalCloseButton />
         <ModalBody>
-          <Text>{post.text}</Text>
+          <Text p={3} m={3} bgColor="themeColor.beige" borderRadius={15}>
+            {post.text}
+          </Text>
+
+          <AddComment
+            post={post}
+            comments={comments}
+            setComments={setComments}
+          />
+          {comments &&
+            comments.map((comment) => (
+              <Comment comment={comment} key={comment.id} />
+            ))}
         </ModalBody>
 
         <ModalFooter>
@@ -59,9 +82,7 @@ const PostDetails = (
                 Like
               </Button>
             )}
-            <Button colorScheme="yellow" onClick={onClose}>
-              Comment
-            </Button>
+
             {user.uid === post.userId && (
               <Button
                 colorScheme="red"

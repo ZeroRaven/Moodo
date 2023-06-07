@@ -131,7 +131,7 @@ export const updateJournalEntry = async (entryId, fieldsToUpdate) => {
   }
 };
 
-export const createPost = async (userId, postInfo) => {
+export const createPost = async (postInfo) => {
   try {
     const postsCollection = collection(db, `posts`);
     return await addDoc(postsCollection, postInfo);
@@ -178,6 +178,30 @@ export const deletePost = async (postId) => {
   const postRef = doc(db, "posts", `${postId}`);
   try {
     await deleteDoc(postRef);
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+export const AddCommentToFirestore = async (commentInfo) => {
+  try {
+    const commentsCollection = collection(db, `comments`);
+    return await addDoc(commentsCollection, commentInfo);
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+
+export const queryAllComments = async (postId) => {
+  const postsQuery = query(
+    collection(db, "comments"),
+    where('postId','==',`${postId}`),
+    orderBy("created_on", "desc")
+  );
+  try {
+    const querySnapshot = await getDocs(postsQuery);
+    return querySnapshot;
   } catch (err) {
     console.error(err);
   }

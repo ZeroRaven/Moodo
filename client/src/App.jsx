@@ -23,7 +23,8 @@ function App() {
   const { user } = useAuth();
   return (
     <ChakraProvider theme={theme}>
-      <Flex display={{md:'flex'}}
+      <Flex
+        display={{ md: "flex" }}
         as={"nav"}
         alignItems="center"
         gap="2"
@@ -62,7 +63,7 @@ function App() {
           </>
         )}
       </Flex>
-      <QuotesDisplay/>
+      <QuotesDisplay />
 
       <Routes>
         <Route path="/login" element={<LoginForm />} />

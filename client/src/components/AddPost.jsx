@@ -10,7 +10,6 @@ import {
   import { useState } from "react";
   import { createPost } from "../FirestoreQueries";
   import { useAuth } from "../contexts/AuthProvider";
-  import { format } from "date-fns";
   
   const AddPost = ({ posts, setPosts}) => {
     const toast = useToast();
@@ -31,7 +30,7 @@ import {
           likes: []
         };
         try{
-            const postRes = await createPost(user.uid, body);
+            const postRes = await createPost(body);
             const data = {
               id: postRes.id,
               ...body,
