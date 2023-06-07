@@ -54,7 +54,7 @@ const Community = () => {
   return (
     <VStack
       bg="themeColor.beige"
-      p="5rem"
+      p={{base:"1.5rem", sm:"2rem",md:"5rem"}}
       w="100%"
       mx="auto"    
     >

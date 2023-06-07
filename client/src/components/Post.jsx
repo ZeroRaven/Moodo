@@ -37,6 +37,7 @@ const Post = ({ post, setPosts, posts }) => {
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { user } = useAuth();
+
   const handleLike = async (postToLike) => {
     try {
       await updatePostLike(postToLike, user.uid);
@@ -90,58 +91,19 @@ const Post = ({ post, setPosts, posts }) => {
       variant="elevated"
       borderRadius="3rem"
       key={post.id}
-      width="30%"
+      width={{base:"100%", lg:"30%"}}
       minW="20rem"
       textAlign="start"
     >
-      <Modal finalFocusRef={finalRef} isOpen={isOpen} onClose={onClose}>
-        <ModalOverlay />
-        <ModalContent p={5} borderRadius="1.6rem">
-          <ModalHeader>
-            <Heading>{post.username}</Heading>
-            <Badge colorScheme="yellow" variant="outline">
-              {formatDistance(Date.now(), post.created_on)} ago
-            </Badge>
-          </ModalHeader>
-
-          <ModalCloseButton />
-          <ModalBody>
-            <Text>{post.text}</Text>
-          </ModalBody>
-
-          <ModalFooter>
-            <ButtonGroup>
-              {post.likes.includes(user.uid) ? (
-                <Button colorScheme="orange" onClick={() => handleLike(post)}>
-                  Unlike
-                </Button>
-              ) : (
-                <Button
-                  bgColor="themeColor.pastel"
-                  color="black"
-                  colorScheme="green"
-                  onClick={() => handleLike(post)}
-                >
-                  Like
-                </Button>
-              )}
-              <Button colorScheme="yellow" onClick={onClose}>
-                Comment
-              </Button>
-              {user.uid === post.userId && (
-                <Button
-                  colorScheme="red"
-                  variant="outline"
-                  onClick={() => handlePostDelete(post.id)}
-                >
-                  Delete
-                </Button>
-              )}
-            </ButtonGroup>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
-
+      <PostDetails
+        finalRef={finalRef}
+        isOpen={isOpen}
+        onClose={onClose}
+        handleLike={handleLike}
+        handlePostDelete={handlePostDelete}
+        post={post}
+        user={user}
+      />
       <CardBody w="100%" px="3rem" pt="3rem" pb="0" onClick={onOpen}>
         <HStack display={{ xl: "flex" }} maxW="100%">
           <Avatar name={post.username} bg="orange.300" size="md" />

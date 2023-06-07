@@ -17,12 +17,13 @@ import MoodGraph from "./components/MoodGraph";
 import Meditation from "./pages/Meditation";
 import Journal from "./pages/Journal";
 import Community from "./pages/Community";
+import QuotesDisplay from "./components/QuotesDisplay";
 
 function App() {
   const { user } = useAuth();
   return (
     <ChakraProvider theme={theme}>
-      <Flex
+      <Flex display={{md:'flex'}}
         as={"nav"}
         alignItems="center"
         gap="2"
@@ -61,6 +62,7 @@ function App() {
           </>
         )}
       </Flex>
+      <QuotesDisplay/>
 
       <Routes>
         <Route path="/login" element={<LoginForm />} />
