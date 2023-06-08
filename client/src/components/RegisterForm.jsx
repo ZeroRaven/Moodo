@@ -1,5 +1,4 @@
-// import axios from 'axios';
-// import { useAuth } from "../contexts/AuthProvider";
+
 import { useState } from "react";
 import {
   FormControl,
@@ -17,8 +16,7 @@ import { Link as ReactLink } from "react-router-dom";
 import { useAuth } from "../contexts/AuthProvider";
 
 const RegisterForm = () => {
-  const { register, isLoadingUser } = useAuth();
-  // Button.isLoading = isLoadingUser;
+  const { register } = useAuth();
   const [error, setError] = useState(null);
 
   const handleRegisterSubmit = async (event) => {

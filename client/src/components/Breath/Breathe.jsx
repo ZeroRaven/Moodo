@@ -1,8 +1,5 @@
 import {
-  Button,
-  Icon,
   IconButton,
-  Stack,
   Text,
   VStack,
 } from "@chakra-ui/react";

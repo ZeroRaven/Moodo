@@ -4,7 +4,7 @@ import { useAuth } from "../contexts/AuthProvider";
 import navStyles from "./NavBar.module.css";
 
 const NavBar = () => {
-    const {user} = useAuth()
+    const {user, isLoadingUser } = useAuth()
   return (
     <nav className={`navbar navbar-expand-lg ${navStyles.navBar}`}>
       <div className={`container-fluid`}>
@@ -26,7 +26,7 @@ const NavBar = () => {
           className="collapse navbar-collapse flex-grow-0"
           id="navbarSupportedContent"
         >
-          {user ? (
+          {user? (
             <ul className="navbar-nav me-auto mb-2 mb-lg-0 ">
               <li className={`nav-item ${navStyles.navItem}`}>
                 <Link
@@ -53,7 +53,7 @@ const NavBar = () => {
                 </Link>
               </li>
             </ul>
-          ) : (
+          ) : !(user) && !isLoadingUser && (
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className={`nav-item ${navStyles.navItem}`}>
                 <Link

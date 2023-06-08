@@ -3,9 +3,9 @@ import {
   VStack,
   useToast,
 } from "@chakra-ui/react";
-import { AddCommentToFirestore } from "../FirestoreQueries";
-import { useAuth } from "../contexts/AuthProvider";
-import AddUserInput from "./AddUserInput";
+import { AddCommentToFirestore } from "../../FirestoreQueries";
+import { useAuth } from "../../contexts/AuthProvider";
+import AddUserInput from "../AddUserInput";
 
 
 //Adds a comment to a post

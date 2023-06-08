@@ -1,0 +1,5 @@
+.graphLink:hover{
+    text-decoration: none !important;
+    scale: 1.07;
+    transition: all 250ms ease-in-out
+}

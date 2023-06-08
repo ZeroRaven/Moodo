@@ -1,11 +1,11 @@
 import { Card, CardBody, HStack, Heading, VStack } from "@chakra-ui/react";
 
-import Entry from "./Entry";
+import Entry from './Entry';
 import { format } from "date-fns";
 
 const AllEntries = ({ groupedData, setGroupedData }) => {
   return (
-    <VStack w="100%" spacing={6} align="stretch">
+    <VStack w="100%" spacing={6} align="stretch" mt="3rem">
       {groupedData &&
         Object.entries(groupedData).map(([date, entries]) => (
           <Card

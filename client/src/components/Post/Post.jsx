@@ -11,19 +11,18 @@ import {
   IconButton,
   Text,
   Tooltip,
-  useDisclosure,
   useToast,
 } from "@chakra-ui/react";
 import { AiFillHeart } from "react-icons/ai";
 import { FaComment } from "react-icons/fa";
 
 import { format, formatDistance } from "date-fns";
-import { useAuth } from "../contexts/AuthProvider";
+import { useAuth } from "../../contexts/AuthProvider";
 import {
   deletePost,
   queryAllComments,
   updatePostLike,
-} from "../FirestoreQueries";
+} from "../../FirestoreQueries";
 import PostDetails from "./PostDetails";
 import { useEffect, useRef, useState } from "react";
 
@@ -31,12 +30,9 @@ const Post = ({ post, setPosts, posts }) => {
   const finalRef = useRef(null);
   const toast = useToast();
 
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [isPostDetailsOpen, setIsPostDetailsOpen] = useState(false);
   const { user } = useAuth();
   const [comments, setComments] = useState([]);
-  const [input, setInput] = useState("");
-  const [error, setError] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const getQuery = async () => {
@@ -49,12 +45,10 @@ const Post = ({ post, setPosts, posts }) => {
           queryArr.push(data);
         });
         setComments(queryArr);
-        setIsLoading(false);
       } catch (err) {
         console.error(err);
       }
     };
-    setIsLoading(true);
     getQuery();
   }, []);
 
@@ -87,7 +81,7 @@ const Post = ({ post, setPosts, posts }) => {
     }
   };
 
-//Deletes a post
+  //Deletes a post
   const handlePostDelete = async (postId) => {
     try {
       await deletePost(postId);
@@ -112,15 +106,18 @@ const Post = ({ post, setPosts, posts }) => {
       variant="elevated"
       borderRadius="3rem"
       key={post.id}
-      width={{ base: "100%", lg: "30%" }}
+      width={{ base: "100%", lg: "40%", xl: "30%" }}
       minW="20rem"
+      minH="18rem"
+    //   maxW='30rem'
       textAlign="start"
       _hover={{ cursor: "pointer", backgroundColor: "themeColor.darkPastel" }}
+      alignSelf="start"
     >
       <PostDetails
         finalRef={finalRef}
-        isOpen={isOpen}
-        onClose={onClose}
+        isOpen={isPostDetailsOpen}
+        onClose={() => setIsPostDetailsOpen(false)}
         handleLike={handleLike}
         handlePostDelete={handlePostDelete}
         post={post}
@@ -128,7 +125,13 @@ const Post = ({ post, setPosts, posts }) => {
         comments={comments}
         setComments={setComments}
       />
-      <CardBody w="100%" px="3rem" pt="3rem" pb="0" onClick={onOpen}>
+      <CardBody
+        w="100%"
+        px="3rem"
+        pt="3rem"
+        pb="0"
+        onClick={() => setIsPostDetailsOpen(true)}
+      >
         <HStack display={{ xl: "flex" }} maxW="100%">
           <Avatar name={post.username} bg="orange.300" size="md" />
           <Heading fontSize="lg">{post.username}</Heading>
@@ -183,7 +186,7 @@ const Post = ({ post, setPosts, posts }) => {
               fontSize="1.6rem"
               color="themeColor.yellow"
               _hover={{ bg: "transparent", color: "yellow.500" }}
-              onClick={onOpen}
+              onClick={() => setIsPostDetailsOpen(true)}
             />
             <Badge fontSize="1rem" bg="transparent">
               {comments.filter((comment) => comment.postId === post.id).length}

@@ -1,7 +1,7 @@
 import "@fontsource/poiret-one/400.css";
 import "@fontsource/raleway/400.css";
 
-import { Routes, Route, NavLink, Link } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import {
   Flex,
   Box,
@@ -21,7 +21,7 @@ import RegisterForm from "./components/RegisterForm";
 import PrivateRoutes from "./components/PrivateRoutes";
 import Home from "./pages/Home";
 import Logout from "./components/Logout";
-import MoodGraph from "./components/MoodGraph";
+import MoodGraph from "./components/Mood/MoodGraph";
 import Meditation from "./pages/Meditation";
 import Journal from "./pages/Journal";
 import Community from "./pages/Community";

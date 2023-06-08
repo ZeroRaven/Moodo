@@ -14,8 +14,9 @@ import {
 } from "@chakra-ui/react";
 import { formatDistance } from "date-fns";
 import { useState } from "react";
-import Comment from "./Comment";
-import AddComment from "./AddComment";
+import Comment from "../Comment/Comment";
+import AddComment from "../Comment/AddComment";
+import DeletePopUp from "../DeletePopUp";
 
 const PostDetails = ({
   finalRef,
@@ -28,6 +29,7 @@ const PostDetails = ({
   comments,
   setComments,
 }) => {
+  const [isDeletePopupOpen, setIsDeletePopupOpen] = useState(false)
   return (
     <Modal
       finalFocusRef={finalRef}
@@ -57,7 +59,12 @@ const PostDetails = ({
           />
           {comments &&
             comments.map((comment) => (
-              <Comment comment={comment} key={comment.id} setComments={setComments} comments={comments}/>
+              <Comment
+                comment={comment}
+                key={comment.id}
+                setComments={setComments}
+                comments={comments}
+              />
             ))}
         </ModalBody>
 
@@ -82,12 +89,18 @@ const PostDetails = ({
               <Button
                 colorScheme="red"
                 variant="outline"
-                onClick={() => handlePostDelete(post.id)}
+                onClick={()=> setIsDeletePopupOpen(true)}
               >
                 Delete
               </Button>
             )}
           </ButtonGroup>
+          <DeletePopUp
+            deleteId={post.id}
+            isOpen={isDeletePopupOpen}
+            onClose={()=>setIsDeletePopupOpen(false)}
+            handleDelete={handlePostDelete}
+          />
         </ModalFooter>
       </ModalContent>
     </Modal>

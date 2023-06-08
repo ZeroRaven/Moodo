@@ -14,6 +14,8 @@ import {
   Box,
   Icon,
   Flex,
+  Container,
+  Spinner,
 } from "@chakra-ui/react";
 import { BsMusicNoteBeamed } from "react-icons/bs";
 import AudioPlayer from "../components/AudioPlayer";
@@ -23,16 +25,24 @@ const Meditation = () => {
   const [audioIndex, setAudioIndex] = useState(null);
   const [activeAudio, setActiveAudio] = useState(null);
   const [audioUrl, setAudioUrl] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const audioArr = [];
     const getAllAudio = async () => {
-      const response = await queryForAudioInfo();
-      response.forEach((snap) => {
-        audioArr.push(snap.data());
-      });
-      setAllAudio(audioArr);
+      try {
+        const response = await queryForAudioInfo();
+        response.forEach((snap) => {
+          audioArr.push(snap.data());
+        });
+        setAllAudio(audioArr);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setIsLoading(false);
+      }
     };
+    setIsLoading(true);
     getAllAudio();
   }, []);
 
@@ -56,14 +66,29 @@ const Meditation = () => {
     setActiveAudio(audio);
     setAudioIndex(index);
   };
-
+  if (isLoading)
+    return (
+      <Container centerContent>
+        <Heading size="lg">
+          <Spinner
+            mr="1rem"
+            mt="10rem"
+            size="xl"
+            emptyColor="gray.200"
+            color="orange.500"
+          />
+          ...LOADING
+        </Heading>
+      </Container>
+    );
   return (
-    <Box
+    <Flex
       mt="5rem"
-      display={{ md: "flex" }}
-      justifyContent="center"
-      mx="3rem"
+      display={{ xl: "flex" }}
+      justifyContent="space-around"
+      mx="auto"
       gap="3rem"
+      maxW='100rem'
     >
       <VStack>
         {activeAudio ? (
@@ -75,9 +100,9 @@ const Meditation = () => {
             audioUrl={audioUrl}
           />
         ) : (
-          <VStack mx='5rem' my={4}>
+          <VStack mx="5rem" my={4} >
             <Flex
-              aspectRatio={1.5/1}
+              aspectRatio={1.5 / 1}
               width="600px"
               bg="blackAlpha.100"
               justifyContent="center"
@@ -96,16 +121,19 @@ const Meditation = () => {
           </VStack>
         )}
       </VStack>
-      <VStack direction="column" gap=".6rem">
+      <VStack direction="column" gap=".6rem" w='100%'>
         {allAudio.map((audio, index) => (
           <Card
             role="button"
             key={audio.url}
             id={audio.title}
+            borderRadius={12}
             direction={{ base: "column", sm: "row" }}
             overflow="hidden"
             variant="filled"
-            width="400px"
+            width={{base:"100%" ,lg:"70%"}}
+            maxW='40rem'
+            minW='25rem'
             onClick={() => handleClick(audio, index)}
             bgColor={
               activeAudio?.title === audio.title
@@ -141,7 +169,7 @@ const Meditation = () => {
           </Card>
         ))}
       </VStack>
-    </Box>
+    </Flex>
   );
 };
 

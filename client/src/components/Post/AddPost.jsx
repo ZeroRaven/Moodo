@@ -1,7 +1,7 @@
 import { useToast } from "@chakra-ui/react";
-import { createPost } from "../FirestoreQueries";
-import { useAuth } from "../contexts/AuthProvider";
-import AddUserInput from "./AddUserInput";
+import { createPost } from "../../FirestoreQueries";
+import { useAuth } from "../../contexts/AuthProvider";
+import AddUserInput from "../AddUserInput";
 
 
 //Adds a post to the discussion board

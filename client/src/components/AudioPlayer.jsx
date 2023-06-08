@@ -78,7 +78,7 @@ const AudioPlayer = ({
     setCurrentTime(0);
   };
   return (
-    <VStack my={7} >
+    <VStack my={7}>
       <Image
         objectFit="cover"
         maxW={{ base: "90%", sm: "90%", md: "70%" }}
@@ -88,7 +88,7 @@ const AudioPlayer = ({
       />
       <Heading size="sm">{currentAudio.title}</Heading>
       <Text>{currentAudio.artist} </Text>
-      <HStack width='80%'>
+      <HStack width="80%" justifyContent="center">
         {!isPlaying ? (
           <Icon role="button" as={FaPlay} onClick={() => setIsPlaying(true)}>
             Play
@@ -112,7 +112,7 @@ const AudioPlayer = ({
           max={duration}
           ref={progressBarRef}
           value={currentTime}
-          width="300px"
+          minW={"220px"}
           onChange={handleProgressBarChange}
         >
           <SliderTrack>

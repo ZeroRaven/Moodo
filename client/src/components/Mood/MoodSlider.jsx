@@ -1,3 +1,5 @@
+import { useRef, useState } from "react";
+import { Link as ReactLink } from "react-router-dom";
 import {
   Box,
   Button,
@@ -25,11 +27,12 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { VscSmiley } from "react-icons/vsc";
-import { useRef, useState } from "react";
-import { Link as ReactLink } from "react-router-dom";
 
-import { useAuth } from "../contexts/AuthProvider";
-import { addMoodInfoToFirestore } from "../FirestoreQueries";
+
+import { useAuth } from "../../contexts/AuthProvider";
+import { addMoodInfoToFirestore } from "../../FirestoreQueries";
+import moodSliderStyles from './MoodSlider.module.css'
+
 
 const MoodSlider = () => {
   const [feel, setFeel] = useState("");
@@ -93,13 +96,16 @@ const MoodSlider = () => {
   };
   return (
     <VStack
-      m={20}
-      bg="themeColor.pastel"
-      p="5rem"
-      w={[400, 500, 700]}
-      borderRadius={40}
-      zIndex={100}
-      opacity={.9}
+    m={20}
+    bg="themeColor.pastel"
+    p="5rem"
+    minW='25rem'
+    maxW='50rem'
+    w={{base:'100%', sm:'80%'}}
+    textAlign='center'
+    borderRadius={40}
+    zIndex={100}
+    opacity={.9}
     >
       <Modal
         closeOnOverlayClick={false}
@@ -149,7 +155,7 @@ const MoodSlider = () => {
       <Text fontSize="2xl">How are you doing today?</Text>
 
       {<Image mt={2} boxSize="110px" src={`src/assets/${feel[0] || 'alright'}.png`} alt="emoticon" />}
-      <Text aria-label="current mood" mt={3}>
+      <Text aria-label="current-mood" mt={3}>
         I am {feel[0] || "..."}
       </Text>
       <Slider
@@ -190,9 +196,10 @@ const MoodSlider = () => {
 
       <Button
         type="submit"
-        onClick={feel ? onOpen : null}
+        onClick={feel ? onOpen : onClose}
         mt={10}
         bgColor="themeColor.yellow"
+        colorScheme="yellow"
         aria-labelledby="mood-tracker"
       >
         Confirm
@@ -201,12 +208,11 @@ const MoodSlider = () => {
         fontSize="xl"
         fontWeight="bold"
         color="themeColor.red"
-        p={2}
-        borderRadius={10}
         as={ReactLink}
         to={"/moodgraph"}
         aria-label="click to checkout your mood graph"
         ref={finalRef}
+        className= {moodSliderStyles.graphLink}
       >
         Have a look at your Mood Graph
       </Link>

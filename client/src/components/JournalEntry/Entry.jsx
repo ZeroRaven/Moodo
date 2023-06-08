@@ -1,11 +1,4 @@
 import {
-  AlertDialog,
-  AlertDialogBody,
-  AlertDialogContent,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogOverlay,
-  Button,
   ButtonGroup,
   Heading,
   IconButton,
@@ -16,16 +9,16 @@ import {
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
-import { deleteJournalEntry, updateJournalEntry } from "../FirestoreQueries";
-import { useRef, useState } from "react";
+import { deleteJournalEntry, updateJournalEntry } from "../../FirestoreQueries";
+import { useState } from "react";
 import { format } from "date-fns";
 import { AiFillDelete } from "react-icons/ai";
 import { FiEdit3 } from "react-icons/fi";
+import DeletePopUp from "../DeletePopUp";
 
 const Entry = ({ each, setGroupedData, groupedData }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
-  const cancelRef = useRef(null);
 
   const [isEditable, setIsEditable] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -173,7 +166,7 @@ const Entry = ({ each, setGroupedData, groupedData }) => {
             autoFocus
           />
         ) : (
-          <Text mt=".4rem" minW='15rem' maxWidth="85%">
+          <Text mt=".4rem" minW="15rem" maxWidth="85%">
             {each.text}{" "}
           </Text>
         )
@@ -203,45 +196,12 @@ const Entry = ({ each, setGroupedData, groupedData }) => {
           Delete
         </IconButton>
       </ButtonGroup>
-
-      <AlertDialog
+      <DeletePopUp
         isOpen={isOpen}
-        leastDestructiveRef={cancelRef}
         onClose={onClose}
-      >
-        <AlertDialogOverlay>
-          <AlertDialogContent bgColor="themeColor.beige">
-            <AlertDialogHeader fontSize="lg" fontWeight="bold">
-              Delete Entry
-            </AlertDialogHeader>
-
-            <AlertDialogBody>
-              Are you sure? You can't undo this action afterwards.
-            </AlertDialogBody>
-
-            <AlertDialogFooter>
-              <Button
-                ref={cancelRef}
-                onClick={onClose}
-                colorScheme="yellow"
-                // ml={3}
-                bgColor="themeColor.yellow"
-              >
-                Cancel
-              </Button>
-              <Button
-                colorScheme="red"
-                ml={3}
-                bgColor="themeColor.red"
-                // mr={3}
-                onClick={() => handleEntryDelete(entryDeleteId)}
-              >
-                Delete
-              </Button>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialogOverlay>
-      </AlertDialog>
+        handleDelete={handleEntryDelete}
+        deleteId={entryDeleteId}
+      />
     </VStack>
   );
 };

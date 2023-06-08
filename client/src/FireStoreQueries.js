@@ -14,6 +14,8 @@ import {
   arrayRemove,
 } from "firebase/firestore";
 
+//USER COLLECTION
+//Creates a user in Firestore
 export const addUserInfoToFirestore = async (userId, userInfo) => {
   try {
     const userDoc = doc(db, `users/${userId}`);
@@ -22,6 +24,9 @@ export const addUserInfoToFirestore = async (userId, userInfo) => {
     console.error(err);
   }
 };
+
+//MOODS COLLECTION
+//Adds a mood entry in Firestore
 export const addMoodInfoToFirestore = async (moodInfo) => {
   try {
     const moodCollection = collection(db, `moods`);
@@ -30,7 +35,7 @@ export const addMoodInfoToFirestore = async (moodInfo) => {
     console.error(err);
   }
 };
-
+//Get mood entries over last 7 days.
 export const queryForMoodInfo = async (userId) => {
   const today = new Date();
   const sevenDaysAgo = new Date();
@@ -50,7 +55,20 @@ export const queryForMoodInfo = async (userId) => {
     console.error(err);
   }
 };
+//Deletes a mood by moodID
+export const deleteMood = async (moodId) => {
+  const moodRef = doc(db, "moods", `${moodId}`);
+  try {
+    await deleteDoc(moodRef);
+  } catch (err) {
+    console.error(err);
+  }
+};
 
+
+
+//TIPS COLLECTION
+//Adds a mood tip into Firestore
 export const addTipsInfoToFirestore = async (tipsInfo) => {
   try {
     const tipsCollection = collection(db, `tips`);
@@ -59,7 +77,7 @@ export const addTipsInfoToFirestore = async (tipsInfo) => {
     console.error(err);
   }
 };
-
+//Gets all tips by mood
 export const queryForTipsInfo = async (mood) => {
   const today = new Date();
   const tipsQuery = query(
@@ -74,6 +92,9 @@ export const queryForTipsInfo = async (mood) => {
   }
 };
 
+
+//MEDITATION AUDIO COLLECTION
+//Gets all meditation audio in ascending order of the titles
 export const queryForAudioInfo = async () => {
   const audioQuery = query(
     collection(db, "meditationAudios"),
@@ -87,6 +108,10 @@ export const queryForAudioInfo = async () => {
   }
 };
 
+
+
+//JOURNAL ENTRIES COLLECTION
+//Adds a journal entry to Firestore
 export const addJournalEntry = async (entryInfo) => {
   try {
     const entryCollection = collection(db, `journalEntries`);
@@ -95,7 +120,7 @@ export const addJournalEntry = async (entryInfo) => {
     console.error(err);
   }
 };
-
+//Gets all entries by a userId ordered by recent date
 export const queryJournalEntries = async (userId) => {
   const entriesQuery = query(
     collection(db, "journalEntries"),
@@ -109,7 +134,7 @@ export const queryJournalEntries = async (userId) => {
     console.error(err);
   }
 };
-
+//Deletes a journal entry by id
 export const deleteJournalEntry = async (entryId) => {
   const entryRef = doc(db, "journalEntries", `${entryId}`);
   try {
@@ -118,7 +143,7 @@ export const deleteJournalEntry = async (entryId) => {
     console.error(err);
   }
 };
-
+//Updates a journal entry by id
 export const updateJournalEntry = async (entryId, fieldsToUpdate) => {
   const entryRef = doc(db, "journalEntries", `${entryId}`);
   try {
@@ -131,6 +156,10 @@ export const updateJournalEntry = async (entryId, fieldsToUpdate) => {
   }
 };
 
+
+
+//POSTS COLLECTION
+//Adds a post into Firestore
 export const createPost = async (postInfo) => {
   try {
     const postsCollection = collection(db, `posts`);
@@ -139,7 +168,7 @@ export const createPost = async (postInfo) => {
     console.error(err);
   }
 };
-
+//Gets all posts ordered by recent date
 export const queryAllPosts = async () => {
   const postsQuery = query(
     collection(db, "posts"),
@@ -152,7 +181,7 @@ export const queryAllPosts = async () => {
     console.error(err);
   }
 };
-
+//Updates like/unlike of a post by userId
 export const updatePostLike = async (postToLike, userId) => {
   const postRef = doc(db, "posts", `${postToLike.id}`);
   if (!postToLike.likes.includes(userId)) {
@@ -173,7 +202,7 @@ export const updatePostLike = async (postToLike, userId) => {
     }
   }
 };
-
+//Deletes a post by postId
 export const deletePost = async (postId) => {
   const postRef = doc(db, "posts", `${postId}`);
   try {
@@ -183,6 +212,10 @@ export const deletePost = async (postId) => {
   }
 };
 
+
+
+//COMMENTS COLLECTION
+//Adds a comment into Firestore
 export const AddCommentToFirestore = async (commentInfo) => {
   try {
     const commentsCollection = collection(db, `comments`);
@@ -192,7 +225,7 @@ export const AddCommentToFirestore = async (commentInfo) => {
   }
 };
 
-
+//Gets all comment by postId ordered by recent date
 export const queryAllComments = async (postId) => {
   const postsQuery = query(
     collection(db, "comments"),
@@ -207,6 +240,7 @@ export const queryAllComments = async (postId) => {
   }
 };
 
+//Deletes a comment by commentId
 export const deleteComment = async (commentId) => {
   const commentRef = doc(db, "comments", `${commentId}`);
   try {

@@ -6,7 +6,6 @@ import {
   HStack,
   Heading,
   ListItem,
-  OrderedList,
   Select,
   Spinner,
   Text,
@@ -53,7 +52,7 @@ const MoodTips = () => {
           apiUrl,
           {
             model: "text-davinci-003",
-            prompt: `Advice within 380 words, what to do when I am feeling ${input}?`,
+            prompt: `Advice within 300 words, what to do when I am feeling ${input}?`,
             n: 1,
             max_tokens: 400,
           },
@@ -91,7 +90,7 @@ const MoodTips = () => {
   };
 
   return (
-    <VStack my="3rem" w={[300, 500, 900]}>
+    <VStack m="3rem" w='100%' maxW='56.5rem' minW='23.5rem'>
       <Card
         align="center"
         bgColor="themeColor.yellow"

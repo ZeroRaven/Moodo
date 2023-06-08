@@ -8,12 +8,12 @@ import {
   Spinner,
 } from "@chakra-ui/react";
 import { Chart } from "react-google-charts";
-import { useAuth } from "../contexts/AuthProvider";
+import { useAuth } from "../../contexts/AuthProvider";
 import { useEffect, useState } from "react";
 import moodGraphStyles from "./MoodGraph.module.css";
 import MoodDisplays from "./MoodDisplays";
 import { Link as ReactLink } from "react-router-dom";
-import { queryForMoodInfo } from "../FirestoreQueries";
+import { queryForMoodInfo } from "../../FirestoreQueries";
 
 const MoodGraph = () => {
   const { user } = useAuth();
@@ -28,13 +28,14 @@ const MoodGraph = () => {
         const queryRes = await queryForMoodInfo(user.uid);
         queryRes.forEach((snap) => {
           const data = snap.data();
-          moodsArr.push(data);
+          moodsArr.push( { id: snap.id, ...data });
           queryArr.push([
             new Date(data["date"].toDate()).toLocaleString().split(",")[0],
             data["feel"][1],
+            snap.id
           ]);
         });
-        setMoodData(moodsArr);
+        setMoodData(moodsArr.sort((a, b) => b.date - a.date));
         setChartData(queryArr);
         setIsLoading(false);
       } catch (err) {
@@ -152,7 +153,7 @@ const MoodGraph = () => {
           width={"100%"}
           height={"500px"}
         />
-        {moodData && <MoodDisplays moodData={moodData} />}
+        {moodData && <MoodDisplays moodData={moodData} setMoodData={setMoodData} chartData={chartData} setChartData={setChartData} />}
       </Container>
     );
   return (

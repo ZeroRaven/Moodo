@@ -1,23 +1,17 @@
-import {
-  Container,
-  Heading,
-  Spinner,
-  VStack,
-} from "@chakra-ui/react";
-import AddEntry from "../components/AddEntry";
+import { Container, Heading, Spinner, VStack } from "@chakra-ui/react";
+import AddEntry from "../components/JournalEntry/AddEntry";
 import { useEffect, useState } from "react";
 import { queryJournalEntries } from "../FirestoreQueries";
-import AllEntries from "../components/AllEntries";
+import AllEntries from "../components/JournalEntry/AllEntries";
 import { useAuth } from "../contexts/AuthProvider";
 import { format } from "date-fns";
-import journalStyles from './Journal.module.css'
+import journalStyles from "./Journal.module.css";
 
 const Journal = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [entryData, setEntryData] = useState(null);
   const [groupedData, setGroupedData] = useState(null);
   const { user } = useAuth();
-
 
   useEffect(() => {
     const getQuery = async () => {
@@ -64,24 +58,17 @@ const Journal = () => {
   return (
     <VStack
       bg="themeColor.pastel"
-      // p={{sm:"5rem"}}
       w="100%"
       mx="auto"
       className={journalStyles.waveContainer}
-      position='relative'
-      p={{base:"1.5rem", sm:"2rem",md:"5rem"}}
+      position="relative"
+      p={{ base: "1.5rem", sm: "2rem", md: "5rem" }}
     >
       <Heading>My Journal</Heading>
-      <AddEntry
-        setGroupedData={setGroupedData}
-        groupedData={groupedData}
-      />
+      <AddEntry setGroupedData={setGroupedData} groupedData={groupedData} />
 
       {entryData && (
-        <AllEntries
-          groupedData={groupedData}
-          setGroupedData={setGroupedData}
-        />
+        <AllEntries groupedData={groupedData} setGroupedData={setGroupedData} />
       )}
     </VStack>
   );
