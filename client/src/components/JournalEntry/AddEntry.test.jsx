@@ -6,7 +6,6 @@ import AddEntry from "./AddEntry";
 import { addJournalEntry } from "../../FirestoreQueries";
 
 beforeEach(() => {
-  // vi.clearAllMocks();
   vi.resetAllMocks();
 });
 const setGroupedData = vi.fn();

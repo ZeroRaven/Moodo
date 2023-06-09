@@ -33,7 +33,6 @@ const DeletePopUp = ({ deleteId, isOpen, onClose, handleDelete }) => {
               ref={cancelRef}
               onClick={onClose}
               colorScheme="yellow"
-              // ml={3}
               bgColor="themeColor.yellow"
             >
               Cancel
@@ -42,7 +41,6 @@ const DeletePopUp = ({ deleteId, isOpen, onClose, handleDelete }) => {
               colorScheme="red"
               ml={3}
               bgColor="themeColor.red"
-              // mr={3}
               onClick={() => handleDelete(deleteId)}
             >
               Delete

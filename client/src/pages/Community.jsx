@@ -4,10 +4,11 @@ import {
   Spinner,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
+
 import { queryAllPosts } from "../FirestoreQueries";
 import AddPost from "../components/Post/AddPost";
 import AllPosts from "../components/Post/AllPosts";
-
+import communityStyles from "./Community.module.css"
 const Community = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [posts, setPosts] = useState(null);
@@ -53,6 +54,7 @@ const Community = () => {
       p={{base:"1.5rem", sm:"2rem",md:"5rem"}}
       w="100%"
       mx="auto"    
+      className={communityStyles.waveContainer}
       
     >
       <Heading>Discussion Board</Heading>

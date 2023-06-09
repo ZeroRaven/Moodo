@@ -30,7 +30,6 @@ const MoodTips = () => {
     let hasCalledToday = false;
 
     try {
-      // setResponse(moodActions.find((each) => each["mood"] === input));
       const queryRes = await queryForTipsInfo(input);
       queryRes.forEach((snap) => {
         const data = snap.data();

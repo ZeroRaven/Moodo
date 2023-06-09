@@ -2,17 +2,7 @@ import "@fontsource/poiret-one/400.css";
 import "@fontsource/raleway/400.css";
 
 import { Routes, Route } from "react-router-dom";
-import {
-  Flex,
-  Box,
-  Heading,
-  Spacer,
-  ChakraProvider,
-  useDisclosure,
-  IconButton,
-  Menu,
-  Fade,
-} from "@chakra-ui/react";
+import { ChakraProvider } from "@chakra-ui/react";
 
 import theme from "./components/theme";
 import LoginForm from "./components/LoginForm";
@@ -52,5 +42,4 @@ function App() {
     </ChakraProvider>
   );
 }
-
 export default App;

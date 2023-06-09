@@ -39,7 +39,6 @@ const AudioPlayer = ({
         audioRef.current.pause();
         clearInterval(intervalRef.current);
       }
-      // setCurrentTime(0);
     }
   }, [isPlaying, audioRef, currentAudio]);
 
