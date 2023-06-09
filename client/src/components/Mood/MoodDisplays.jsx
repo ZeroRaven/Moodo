@@ -27,7 +27,7 @@ const MoodDisplays = ({ moodData, setMoodData, chartData, setChartData }) => {
       await deleteMood(moodId);
       setMoodData(moodData.filter((mood) => mood.id !== moodId));
       setChartData(chartData.filter((each) => each[2] !== moodId));
-
+      
       toast({
         title: `Entry Deleted!`,
         description: ` The mood entry has been deleted from your log.`,
@@ -39,6 +39,7 @@ const MoodDisplays = ({ moodData, setMoodData, chartData, setChartData }) => {
     } catch (err) {
       console.error(err);
     }
+
     onClose()
   };
   return (
@@ -54,13 +55,14 @@ const MoodDisplays = ({ moodData, setMoodData, chartData, setChartData }) => {
         handleDelete={handleMoodDelete}
       />
       {moodData &&
-        moodData.map((each) => {
+        moodData.map((each, index) => {
           return (
             <Card
               bg="themeColor.beige"
               variant="elevated"
               borderRadius={20}
               key={each.date}
+              data-testid={`mood-entry-${index}`}
             >
               <CardBody>
                 <HStack
@@ -83,6 +85,7 @@ const MoodDisplays = ({ moodData, setMoodData, chartData, setChartData }) => {
                     )}
                   </Badge>
                   <IconButton
+                  aria-label="delete-button"
                     icon={<AiFillDelete />}
                     color="themeColor.red"
                     bgColor="transparent"

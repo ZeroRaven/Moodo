@@ -41,7 +41,7 @@ const AddUserInput = ({ onSubmit, placeholder, charLength, widthLength }) => {
         <FormHelperText textAlign="end">
           {charLength - input.length} characters left.
         </FormHelperText>
-        {input.length === 0 && error && <Text color="red">{error}</Text>}
+        {input.length === 0 && error && <Text aria-label="error-message" color="red">{error}</Text>}
       </FormControl>
       <Button
         px={7}

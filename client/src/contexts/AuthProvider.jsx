@@ -7,6 +7,7 @@ import {
   signInWithPopup,
   updateProfile,
 } from "firebase/auth";
+
 import { createContext, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -36,6 +37,7 @@ export const AuthProvider = ({ children }) => {
             setUser(user);
             navigate("/");
             setIsLoadingUser(false);
+
           } else {
             console.log("user not here");
             setIsLoadingUser(false);

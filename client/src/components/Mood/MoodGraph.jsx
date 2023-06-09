@@ -19,7 +19,7 @@ const MoodGraph = () => {
   const { user } = useAuth();
   const [chartData, setChartData] = useState([]);
   const [moodData, setMoodData] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
     const getQuery = async () => {
       const queryArr = [];
@@ -152,6 +152,7 @@ const MoodGraph = () => {
           options={options}
           width={"100%"}
           height={"500px"}
+          data-testid="chart-component"
         />
         {moodData && <MoodDisplays moodData={moodData} setMoodData={setMoodData} chartData={chartData} setChartData={setChartData} />}
       </Container>

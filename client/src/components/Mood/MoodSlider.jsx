@@ -140,6 +140,7 @@ const MoodSlider = () => {
 
           <ModalFooter>
             <Button
+            aria-label="mood-confirm-btn"
               bgColor="themeColor.yellow"
               colorScheme="yellow"
               mr={3}
@@ -201,6 +202,7 @@ const MoodSlider = () => {
         bgColor="themeColor.yellow"
         colorScheme="yellow"
         aria-labelledby="mood-tracker"
+        data-testid='mood-submit'
       >
         Confirm
       </Button>

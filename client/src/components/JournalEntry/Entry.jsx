@@ -19,7 +19,6 @@ import DeletePopUp from "../DeletePopUp";
 const Entry = ({ each, setGroupedData, groupedData }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
-
   const [isEditable, setIsEditable] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [entryDeleteId, setEntryDeleteId] = useState(null);
@@ -56,7 +55,7 @@ const Entry = ({ each, setGroupedData, groupedData }) => {
     if (isEditable) {
       setError("");
     }
-    if (e.target.value.trim() === "") {
+    if (e.target.value?.trim() === "") {
       setFields({
         ...fields,
         text: each.text,
@@ -75,7 +74,7 @@ const Entry = ({ each, setGroupedData, groupedData }) => {
     }
     setFields({
       ...fields,
-      [name]: value.trim(),
+      [name]: value,
       updated_on: new Date(),
     });
   };
@@ -151,6 +150,7 @@ const Entry = ({ each, setGroupedData, groupedData }) => {
       {!isLoading ? (
         isEditable ? (
           <Textarea
+          aria-label="edit-box"
             type="text"
             name="text"
             onChange={onValueChange}
@@ -173,10 +173,11 @@ const Entry = ({ each, setGroupedData, groupedData }) => {
       ) : (
         <Spinner emptyColor="gray.200" color="orange.500" size="md" />
       )}
-      {error && <Text color="red">{error}</Text>}
+      {error && <Text aria-label="error-message" color="red">{error}</Text>}
 
       <ButtonGroup position={{ md: "absolute" }} right="3rem">
         <IconButton
+          aria-label="edit-button"
           icon={<FiEdit3 />}
           colorScheme="yellow"
           ml={4}
@@ -185,6 +186,7 @@ const Entry = ({ each, setGroupedData, groupedData }) => {
           Edit
         </IconButton>
         <IconButton
+          aria-label="delete-button"
           icon={<AiFillDelete />}
           bgColor="themeColor.red"
           colorScheme="red"
