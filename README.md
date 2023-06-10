@@ -103,4 +103,6 @@ npm run test
 Guided Medication Audio:
 https://www.freemindfulness.org/
 
-gs://mentalhealthapp-28d99.appspot.com/
+
+## Deployed Version
+https://mentalhealthapp-28d99.web.app/

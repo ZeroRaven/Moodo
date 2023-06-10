@@ -155,7 +155,7 @@ const MoodSlider = () => {
       <Heading id="mood-tracker">Mood Tracker</Heading>
       <Text fontSize="2xl">How are you doing today?</Text>
 
-      {<Image mt={2} boxSize="110px" src={`src/assets/${feel[0] || 'alright'}.png`} alt="emoticon" />}
+      {<Image mt={2} boxSize="110px" src={`/${feel[0] || 'alright'}.png`} alt="emoticon" />}
       <Text aria-label="current-mood" mt={3}>
         I am {feel[0] || "..."}
       </Text>
