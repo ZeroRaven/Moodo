@@ -99,7 +99,7 @@ const MoodSlider = () => {
     m={20}
     bg="themeColor.pastel"
     p="5rem"
-    minW='25rem'
+    // minW='20rem'
     maxW='50rem'
     w={{base:'100%', sm:'80%'}}
     textAlign='center'
@@ -171,19 +171,19 @@ const MoodSlider = () => {
         colorScheme="orange"
         onChange={handleMoodBarChange}
       >
-        <SliderMark value={0} mt="5" ml="-2.5" fontSize="md">
+        <SliderMark value={0} mt="5" ml="-3" fontSize="md">
           Awful
         </SliderMark>
-        <SliderMark value={25} mt="5" ml="-2.5" fontSize="md">
+        <SliderMark value={25} mt="5" ml="-1" fontSize="md">
           Bad
         </SliderMark>
-        <SliderMark value={50} mt="5" ml="-2.5" fontSize="md">
+        <SliderMark value={50} mt="5" ml="-2" fontSize="md">
           Ok
         </SliderMark>
-        <SliderMark value={75} mt="5" ml="-2.5" fontSize="md">
+        <SliderMark value={75} mt="5" ml="-3" fontSize="md">
           Good
         </SliderMark>
-        <SliderMark value={100} mt="5" ml="-2.5" fontSize="md">
+        <SliderMark value={100} mt="5" ml="-1" fontSize="md">
           Great!{" "}
         </SliderMark>
 
