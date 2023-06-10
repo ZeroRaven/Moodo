@@ -17,8 +17,8 @@ const Home = () => {
         <MoodSlider />
       </Container>
       <Container maxWidth="100%" centerContent mt={10}>
-        <Heading>Take a Moment to Breath...</Heading>
-        <Text>Click the circle to start</Text>
+        <Heading textAlign='center'>Take a Moment to Breath...</Heading>
+        <Text textAlign='center'>Click the circle to start</Text>
         <Breathe />
       </Container>
       <Container maxWidth="100%" centerContent>

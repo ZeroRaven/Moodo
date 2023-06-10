@@ -103,7 +103,8 @@ const Meditation = () => {
           <VStack mx="5rem" my={4} >
             <Flex
               aspectRatio={1.5 / 1}
-              width="600px"
+              minW='350px'
+              width={{base:'100%', lg:'600px'}}
               bg="blackAlpha.100"
               justifyContent="center"
               alignItems="center"
@@ -133,7 +134,7 @@ const Meditation = () => {
             variant="filled"
             width={{base:"100%" ,lg:"70%"}}
             maxW='40rem'
-            minW='25rem'
+            minW='22rem'
             onClick={() => handleClick(audio, index)}
             bgColor={
               activeAudio?.title === audio.title

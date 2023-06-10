@@ -52,7 +52,7 @@ const LoginForm = () => {
   };
 
   return (
-    <Container maxW="md" pt={7} bg='themeColor.beige' p={20} my={10} borderRadius={30}>
+    <Container maxW="md" pt={7} bg='themeColor.beige' p={20} my={10} borderRadius={30} centerContent>
       {error && <Text color="red">{error}</Text>}
 
       <form onSubmit={handleLoginSubmit} aria-label="form">

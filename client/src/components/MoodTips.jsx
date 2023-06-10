@@ -89,7 +89,7 @@ const MoodTips = () => {
   };
 
   return (
-    <VStack m="3rem" w='100%' maxW='56.5rem' minW='23.5rem'>
+    <VStack m="3rem" w='100%' maxW='56.5rem' minW='23.5rem' justifyContent='center'>
       <Card
         align="center"
         bgColor="themeColor.yellow"
@@ -129,10 +129,10 @@ const MoodTips = () => {
               </form>
             </HStack>
           )}
-          <UnorderedList my={5} styleType="none" spacing={4}>
+          <UnorderedList my={5} styleType="none" ml={0} pl={0} spacing={4} w='100%'>
             {response &&
               response.tips.map((each) => (
-                <ListItem lineHeight={7} key={each}>
+                <ListItem w='100%' p={1} lineHeight={7} key={each}>
                   {each}
                 </ListItem>
               ))}

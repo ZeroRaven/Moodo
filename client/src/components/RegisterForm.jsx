@@ -51,6 +51,7 @@ const RegisterForm = () => {
       p={20}
       my={10}
       borderRadius={30}
+      centerContent
     >
       {error && <Text color="red">{error}</Text>}
       <form onSubmit={handleRegisterSubmit} aria-label="form">
@@ -97,12 +98,12 @@ const RegisterForm = () => {
           Register
         </Button>
       </form>
-      <Text mt={2}>
-        Already have an account?{" "}
-        <Link color='orange.500' as={ReactLink} to="/login" >
+      <Text mt={2} mb={0}>
+        Already have an account?
+      </Text>
+      <Link color='orange.500' as={ReactLink} to="/login" >
           Sign in
         </Link>
-      </Text>
     </Container>
   );
 };
