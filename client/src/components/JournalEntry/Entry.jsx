@@ -31,14 +31,17 @@ const Entry = ({ each, setGroupedData, groupedData }) => {
 
   const handleEntryDelete = async (id) => {
     await deleteJournalEntry(id);
-    setGroupedData(
-      Object.fromEntries(
-        Object.entries(groupedData).map(([date, data]) => [
-          date,
-          data.filter((each) => each.id !== id),
-        ])
-      )
-    );
+    setGroupedData((prevGroupedData) => {
+      const updatedGroupData = Object.fromEntries(
+        Object.entries(prevGroupedData)
+          .map(([date, data]) => {
+            const filteredData = data.filter((each) => each.id !== id);
+            return filteredData.length > 0 ? [date, filteredData] : null;
+          })
+          .filter(Boolean)
+      );
+      return updatedGroupData;
+    });
     toast({
       title: `Entry Deleted!`,
       description: ` The entry has been deleted from your journal.`,
@@ -150,7 +153,7 @@ const Entry = ({ each, setGroupedData, groupedData }) => {
       {!isLoading ? (
         isEditable ? (
           <Textarea
-          aria-label="edit-box"
+            aria-label="edit-box"
             type="text"
             name="text"
             onChange={onValueChange}
@@ -173,7 +176,11 @@ const Entry = ({ each, setGroupedData, groupedData }) => {
       ) : (
         <Spinner emptyColor="gray.200" color="orange.500" size="md" />
       )}
-      {error && <Text aria-label="error-message" color="red">{error}</Text>}
+      {error && (
+        <Text aria-label="error-message" color="red">
+          {error}
+        </Text>
+      )}
 
       <ButtonGroup position={{ md: "absolute" }} right="3rem">
         <IconButton
