@@ -36,7 +36,7 @@ const Comment = ({ comment, setComments, comments }) => {
 
   return (
     <VStack
-      display={{ sm: "flex" }}
+      // display={{ sm: "flex" }}
       px={3}
       py={5}
       my={2}
@@ -45,38 +45,39 @@ const Comment = ({ comment, setComments, comments }) => {
       position="relative"
       alignItems="start"
     >
-      <HStack>
-        <Avatar name={comment.username} bg="green.300" size="sm" />
+      <HStack display={{ sm: "flex" }}>
+        <HStack>
+          <Avatar name={comment.username} bg="green.300" size="sm" />
+          <Heading fontSize="md">{comment.username}</Heading>
+        </HStack>
 
-        <Heading fontSize="md">{comment.username}</Heading>
-        <VStack>
-          <Badge
-            colorScheme="black"
-            fontSize=".6rem"
-            // position={{md:"absolute"}}
-            // right="0"
-            bgColor='themeColor.darkPastel'
-            padding='.2rem'
-            borderRadius='.3rem'
-            ml=".5rem"
-          >
-            {formatDistance(Date.now(), comment.created_on)} ago
-          </Badge>
-          {comment.userId === user.uid && (
-            <IconButton
-              icon={<AiFillDelete />}
-              color="themeColor.red"
-              bgColor="transparent"
-              position="absolute"
-              right="0"
-              bottom="0"
-              mr="1.5rem"
-              mt="1rem"
-              onClick={onOpen}
-              _hover={{ backgroundColor: "transparent", color: "#FF7878" }}
-            ></IconButton>
-          )}
-        </VStack>
+        <Badge
+          colorScheme="black"
+          fontSize=".6rem"
+          bgColor="themeColor.darkPastel"
+          p=".4rem"
+          borderRadius=".3rem"
+          mt={{base: ".5rem",sm:'0rem'}}
+          ml={{base: "0rem", sm:'.7rem'}}
+
+        >
+          {formatDistance(Date.now(), comment.created_on)} ago
+        </Badge>
+
+        {comment.userId === user.uid && (
+          <IconButton
+            icon={<AiFillDelete />}
+            color="themeColor.red"
+            bgColor="transparent"
+            position="absolute"
+            right="0"
+            bottom="0"
+            mr="1.5rem"
+            mt="1rem"
+            onClick={onOpen}
+            _hover={{ backgroundColor: "transparent", color: "#FF7878" }}
+          ></IconButton>
+        )}
       </HStack>
       <Text bgColor="themeColor.darkPastel" p={3} borderRadius={15} w="97%">
         {comment.text}

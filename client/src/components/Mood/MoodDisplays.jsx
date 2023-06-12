@@ -62,12 +62,15 @@ const MoodDisplays = ({ moodData, setMoodData, chartData, setChartData }) => {
               variant="elevated"
               borderRadius={20}
               key={each.date}
+              py='.4rem'
               data-testid={`mood-entry-${index}`}
             >
               <CardBody>
                 <HStack
                   p={3}
-                  m={3}
+                  my={5}
+                  display={{sm:"flex"}}
+
                   bgColor="themeColor.pastel"
                   borderRadius={7}
                   justifyContent="space-between"
@@ -75,8 +78,8 @@ const MoodDisplays = ({ moodData, setMoodData, chartData, setChartData }) => {
                   <Heading fontSize="lg">I feel {each.feel[0]}</Heading>
                   <Badge
                     bgColor="themeColor.darkPastel"
-                    fontSize=".8rem"
-                    p=".5rem"
+                    fontSize=".6rem"
+                    p=".4rem"
                     borderRadius={10}
                   >
                     {format(
@@ -91,9 +94,9 @@ const MoodDisplays = ({ moodData, setMoodData, chartData, setChartData }) => {
                     bgColor="transparent"
                     position="absolute"
                     right="0"
-                    top="0"
-                    mr="2.2rem"
-                    mt="6rem"
+                    bottom="0"
+                    mr="2.0rem"
+                    mb=".3rem"
                     onClick={() => {
                       onOpen();
                       setDeleteId(each.id);
