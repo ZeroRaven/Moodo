@@ -36,9 +36,10 @@ const Comment = ({ comment, setComments, comments }) => {
 
   return (
     <VStack
-      px={8}
+      display={{ sm: "flex" }}
+      px={3}
       py={5}
-      m={3}
+      my={2}
       bgColor="themeColor.pastel"
       borderRadius={7}
       position="relative"
@@ -52,9 +53,12 @@ const Comment = ({ comment, setComments, comments }) => {
           <Badge
             colorScheme="black"
             fontSize=".6rem"
-            position="absolute"
-            right="0"
-            mr="1rem"
+            // position={{md:"absolute"}}
+            // right="0"
+            bgColor='themeColor.darkPastel'
+            padding='.2rem'
+            borderRadius='.3rem'
+            ml=".5rem"
           >
             {formatDistance(Date.now(), comment.created_on)} ago
           </Badge>
@@ -65,9 +69,9 @@ const Comment = ({ comment, setComments, comments }) => {
               bgColor="transparent"
               position="absolute"
               right="0"
-              top="0"
-              mr=".6rem"
-              mt="4rem"
+              bottom="0"
+              mr="1.5rem"
+              mt="1rem"
               onClick={onOpen}
               _hover={{ backgroundColor: "transparent", color: "#FF7878" }}
             ></IconButton>
