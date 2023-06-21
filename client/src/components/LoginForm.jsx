@@ -8,8 +8,11 @@ import {
   Container,
   Text,
   ButtonGroup,
+  Link,
 } from "@chakra-ui/react";
 import { useAuth } from "../contexts/AuthProvider";
+import { Link as ReactLink } from "react-router-dom";
+
 
 const LoginForm = () => {
   const { login, loginWithGoogle } = useAuth();
@@ -74,6 +77,11 @@ const LoginForm = () => {
           <Button colorScheme="yellow" bgColor="#FFC93C"  color='black' type="submit">Login</Button>
           <Button colorScheme="green" bgColor="#B5D5C5" color='black' onClick={handleSignInWithGoogle}>Sign In with Google</Button>
         </ButtonGroup>
+        <Text mt={2}>Not a member yet?
+        <br />
+        <Link color='orange.500' as={ReactLink} to="/register" >
+          Sign Up
+        </Link></Text>
       </form>
     </Container>
   );

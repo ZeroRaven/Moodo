@@ -3,7 +3,6 @@ import { useState } from "react";
 import {
   FormControl,
   FormLabel,
-  FormErrorMessage,
   FormHelperText,
   Input,
   Button,
@@ -98,12 +97,14 @@ const RegisterForm = () => {
           Register
         </Button>
       </form>
-      <Text mt={2} mb={0}>
+      <Text mt={2}>
         Already have an account?
-      </Text>
-      <Link color='orange.500' as={ReactLink} to="/login" >
+        <br/>
+        <Link color='orange.500' as={ReactLink} to="/login" >
           Sign in
         </Link>
+      </Text>
+      
     </Container>
   );
 };
