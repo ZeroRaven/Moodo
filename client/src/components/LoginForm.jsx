@@ -83,8 +83,12 @@ const LoginForm = () => {
           Sign Up
         </Link></Text>
       </form>
+      <Text mt={3} as='sub'>Demo Account:</Text>
+      <br />
+      <Text as='sub'>Email: test@abc.com</Text>
+      <br />
+      <Text as='sub'>Password: test123</Text>
     </Container>
   );
 };
-
 export default LoginForm;
