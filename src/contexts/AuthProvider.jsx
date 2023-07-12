@@ -80,7 +80,6 @@ export const AuthProvider = ({ children }) => {
 
   const loginWithGoogle = async () => {
     setIsLoadingUser(true);
-    debugger;
     try {
       const result = await signInWithPopup(auth, provider);
       const credential = GoogleAuthProvider.credentialFromResult(result);
