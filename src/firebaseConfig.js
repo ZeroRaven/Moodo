@@ -8,13 +8,14 @@ import { getStorage } from "firebase/storage";
 
 // My web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyA9nX9m2rbnDC4hC18gEBok-YBEzzaW3lY",
-  authDomain: "mentalhealthapp-28d99.firebaseapp.com",
-  projectId: "mentalhealthapp-28d99",
-  storageBucket: "mentalhealthapp-28d99.appspot.com",
-  messagingSenderId: "69038588759",
-  appId: "1:69038588759:web:6870718dac7c384b633412",
-  measurementId: "G-39SL0JY1RC",
+  apiKey: "AIzaSyAR0UfLF30216CEuUdE7jO8E2qhLwgQQy4",
+  authDomain: "mero-bhawana.firebaseapp.com",
+  databaseURL: "https://mero-bhawana-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "mero-bhawana",
+  storageBucket: "mero-bhawana.appspot.com",
+  messagingSenderId: "488901715785",
+  appId: "1:488901715785:web:48f8c0a78e227a19f41c98",
+  measurementId: "G-M583Y55QH4"
 };
 
 // Initialize Firebase
